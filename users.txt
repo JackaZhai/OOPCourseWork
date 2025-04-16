@@ -1,0 +1,15 @@
+consumer1 pass1 consumer
+consumer2 pass2 consumer
+consumer3 pass3 consumer
+chef1 pass4 chef
+chef2 pass5 chef
+cashier1 pass6 cashier
+cashier2 pass7 cashier
+admin1 pass8 admin
+admin2 pass9 admin
+boss1 pass10 boss
+server1 pass11 server
+server2 pass12 server
+1 2 boss
+tw 1 admin
+twww 111 boss
