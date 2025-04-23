@@ -402,3 +402,5 @@ private:
 //     dataWriter.saveSaleSummary(danjuNumber, totalAmount);
 //     dataWriter.saveSaleDetail(danjuNumber, "宫保鸡丁", 28.0, 2);
 // }
+
+// 11111
