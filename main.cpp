@@ -2,64 +2,64 @@
 #include <iomanip>
 #include <string>
 #include<cstring>
-#include <ctime> //Ìá¹©ÁËÊ±¼äºÍÈÕÆÚµÄ´¦Àí¹¦ÄÜ¡£
-#include <sstream>//¿ÉÒÔ½«Ò»¸ö×Ö·û´®·Ö½âÎª¶à¸ö×Ó´®£¬·½±ã½âÎöÊäÈë iss>> 
-#include <cstdlib> //Ìá¹©ÁËÒ»Ğ©Í¨ÓÃµÄÊµÓÃº¯Êı exit(0)º¯Êı£¬¿ÉÓÃÓÚ³ÌĞòµÄÒì³£ÖÕÖ¹
-#include <fstream> //ÎÄ¼ş´¦Àí 
+#include <ctime> //æä¾›äº†æ—¶é—´å’Œæ—¥æœŸçš„å¤„ç†åŠŸèƒ½ã€‚
+#include <sstream>//å¯ä»¥å°†ä¸€ä¸ªå­—ç¬¦ä¸²åˆ†è§£ä¸ºå¤šä¸ªå­ä¸²ï¼Œæ–¹ä¾¿è§£æè¾“å…¥ iss>> 
+#include <cstdlib> //æä¾›äº†ä¸€äº›é€šç”¨çš„å®ç”¨å‡½æ•° exit(0)å‡½æ•°ï¼Œå¯ç”¨äºç¨‹åºçš„å¼‚å¸¸ç»ˆæ­¢
+#include <fstream> //æ–‡ä»¶å¤„ç† 
 #include <limits> //
-#include <locale>//ÖĞÎÄ²»ÂÒÂë£¿ 
+#include <locale>//ä¸­æ–‡ä¸ä¹±ç 
 using namespace std;
  
-void mainmenu();//Ö÷½çÃæ 
-void showUserSelection(); // ÏÔÊ¾ÓÃ»§Ñ¡Ôñ½çÃæ
-void registerUser();// ×¢²áÓÃ»§
-void login();// µÇÂ¼º¯Êı
-void riqi();// ÏÔÊ¾ÈÕÆÚ
-void loadUsers();// ¼ÓÔØÓÃ»§Êı¾İ
-void loadTables();// ¼ÓÔØ²ÍÎ»Êı¾İ 
-void loadGoods();// ¼ÓÔØÉÌÆ·Êı¾İ
-void loadSaleSummary();// ¼ÓÔØĞ¡Æ±¸ÅÒªĞÅÏ¢
-void loadSaleDetail();// ¼ÓÔØĞ¡Æ±ÏêÏ¸ĞÅÏ¢
-void displayDishes();// ÏÔÊ¾¿ÉÌá¹©²ËÆ·ĞÅÏ¢
-void viewTables();// ²é¿´ËùÓĞµÄ²ÍÎ»ĞÅÏ¢
-void reserveTable();// Ô¤¶¨²ÍÎ»
-void manageTables();// ¹ÜÀí²ÍÎ»ĞÅÏ¢ /Ô¤¶¨ ²é¿´ ·µ»ØÉÏÒ»¼¶ ÍË³ö 
-void saveGoods(); //±£´æÉÌÆ·ĞÅÏ¢µ½ÎÄ¼ş
-void saveTables();// ±£´æ²ÍÎ»ĞÅÏ¢µ½ÎÄ¼ştables.txt
-void saveUsers();// ±£´æÓÃ»§ĞÅÏ¢µ½ÎÄ¼şusers.txt
-void showOrderedDishes(int n); //Õ¹Ê¾ÊäÈënÊ± Æä¶ÔÓ¦×ÀºÅµÄ²ËÆ· 
-void takeOrder();//µã²Íº¯Êı
-void consumerMenu();// Ïû·ÑÕß²Ëµ¥
-void viewReceipt();// ²é¿´Ğ¡Æ±  Ğ¡Æ±ĞÅÏ¢´æ´¢ÔÚreceipt.txtÎÄ¼şÖĞ ¸ñÊ½Îª£º²ËÆ·Ãû³Æ ÊıÁ¿ ¼Û¸ñ
-void chefMenu();// ³øÊ¦²Ëµ¥
-void chefViewReceipt();// ³øÊ¦²é¿´Ğ¡Æ± ×ÀºÅ ´ı×ö²ËÆ·Ãû³Æ ÊıÁ¿
-int findGoodsIdByName(const string& dishName);//ÕÒµ½ÉÌÆ· ID¸¨Öúº¯Êı
-void changeDishStatusByChef();// ³øÊ¦¸Ä±ä²ËÆ·×´Ì¬ ¸Ä±ädishes¡¾i¡¿ÖĞµÄ×´Ì¬ 
-void chefViewStatistics();// ³øÊ¦²é¿´Í³¼Æ ÒÑÍê³É
-void serverSubsytemMenu();//·şÎñÔ±²Ëµ¥
-void addDishes();//¼Ó²Ëº¯Êı 
-void dishOut(); ///³ö²Ëº¯Êı ¸ü¸Ä×´Ì¬Îª 2
-void view_yichucai();//²é¿´ÒÑ³ö²Ë
-void view_weichucai();//²é¿´Î´³ö²Ë 
-void printTableReceipt(); //·şÎñÔ±´òÓ¡Ğ¡Æ± ÊäÈë×ÀºÅ Êä³ö Ãû³Æ ¼Û¸ñ ÊıÁ¿ 
-void cashierMenu();// ÊÕÒøÔ±²Ëµ¥
-void cashierSettlement();// ÊÕÒøÔ±½áËãÊÕ·Ñ  ¸Ä±ä×´Ì¬Îª3
-void cashierStatistics();// ÊÕÒøÔ±Í³¼Æ
-void cashierViewStatistics();// ÊÕÒøÔ±²é¿´Í³¼Æ
-void manageMenu();// ¹ÜÀíÔ±²Ëµ¥ 
-void addUserInformation(); //Ìí¼ÓÓÃ»§ĞÅÏ¢ ÓÃ»§Ãû ÃÜÂë ½ÇÉ« 
-void changeUserInformation(); // ĞŞ¸ÄÓÃ»§ĞÅÏ¢
-void viewUserInformation();// ²é¿´ËùÓĞÓÃ»§ĞÅÏ¢£¨ÀÏ°åºÍ¹ÜÀí²é¿´ 
-void addGoodsMenu();//Ìí¼Ó²ËÆ·ĞÅÏ¢
-void changeGoods();//ĞŞ¸Ä²ËÆ·ĞÅÏ¢
-void bossMenu();// ÀÏ°å²Ëµ¥
-void shouru(); //²é¿´×ÜÊÕÈë
+void mainmenu();//ä¸»ç•Œé¢ 
+void showUserSelection(); // æ˜¾ç¤ºç”¨æˆ·é€‰æ‹©ç•Œé¢
+void registerUser();// æ³¨å†Œç”¨æˆ·
+void login();// ç™»å½•å‡½æ•°
+void riqi();// æ˜¾ç¤ºæ—¥æœŸ
+void loadUsers();// åŠ è½½ç”¨æˆ·æ•°æ®
+void loadTables();// åŠ è½½é¤ä½æ•°æ® 
+void loadGoods();// åŠ è½½å•†å“æ•°æ®
+void loadSaleSummary();// åŠ è½½å°ç¥¨æ¦‚è¦ä¿¡æ¯
+void loadSaleDetail();// åŠ è½½å°ç¥¨è¯¦ç»†ä¿¡æ¯
+void displayDishes();// æ˜¾ç¤ºå¯æä¾›èœå“ä¿¡æ¯
+void viewTables();// æŸ¥çœ‹æ‰€æœ‰çš„é¤ä½ä¿¡æ¯
+void reserveTable();// é¢„å®šé¤ä½
+void manageTables();// ç®¡ç†é¤ä½ä¿¡æ¯ /é¢„å®š æŸ¥çœ‹ è¿”å›ä¸Šä¸€çº§ é€€å‡º 
+void saveGoods(); //ä¿å­˜å•†å“ä¿¡æ¯åˆ°æ–‡ä»¶
+void saveTables();// ä¿å­˜é¤ä½ä¿¡æ¯åˆ°æ–‡ä»¶tables.txt
+void saveUsers();// ä¿å­˜ç”¨æˆ·ä¿¡æ¯åˆ°æ–‡ä»¶users.txt
+void showOrderedDishes(int n); //å±•ç¤ºè¾“å…¥næ—¶ å…¶å¯¹åº”æ¡Œå·çš„èœå“ 
+void takeOrder();//ç‚¹é¤å‡½æ•°
+void consumerMenu();// æ¶ˆè´¹è€…èœå•
+void viewReceipt();// æŸ¥çœ‹å°ç¥¨  å°ç¥¨ä¿¡æ¯å­˜å‚¨åœ¨receipt.txtæ–‡ä»¶ä¸­ æ ¼å¼ä¸ºï¼šèœå“åç§° æ•°é‡ ä»·æ ¼
+void chefMenu();// å¨å¸ˆèœå•
+void chefViewReceipt();// å¨å¸ˆæŸ¥çœ‹å°ç¥¨ æ¡Œå· å¾…åšèœå“åç§° æ•°é‡
+int findGoodsIdByName(const string& dishName);//æ‰¾åˆ°å•†å“ IDè¾…åŠ©å‡½æ•°
+void changeDishStatusByChef();// å¨å¸ˆæ”¹å˜èœå“çŠ¶æ€ æ”¹å˜dishesã€iã€‘ä¸­çš„çŠ¶æ€ 
+void chefViewStatistics();// å¨å¸ˆæŸ¥çœ‹ç»Ÿè®¡ å·²å®Œæˆ
+void serverSubsytemMenu();//æœåŠ¡å‘˜èœå•
+void addDishes();//åŠ èœå‡½æ•° 
+void dishOut(); ///å‡ºèœå‡½æ•° æ›´æ”¹çŠ¶æ€ä¸º 2
+void view_yichucai();//æŸ¥çœ‹å·²å‡ºèœ
+void view_weichucai();//æŸ¥çœ‹æœªå‡ºèœ 
+void printTableReceipt(); //æœåŠ¡å‘˜æ‰“å°å°ç¥¨ è¾“å…¥æ¡Œå· è¾“å‡º åç§° ä»·æ ¼ æ•°é‡ 
+void cashierMenu();// æ”¶é“¶å‘˜èœå•
+void cashierSettlement();// æ”¶é“¶å‘˜ç»“ç®—æ”¶è´¹  æ”¹å˜çŠ¶æ€ä¸º3
+void cashierStatistics();// æ”¶é“¶å‘˜ç»Ÿè®¡
+void cashierViewStatistics();// æ”¶é“¶å‘˜æŸ¥çœ‹ç»Ÿè®¡
+void manageMenu();// ç®¡ç†å‘˜èœå• 
+void addUserInformation(); //æ·»åŠ ç”¨æˆ·ä¿¡æ¯ ç”¨æˆ·å å¯†ç  è§’è‰² 
+void changeUserInformation(); // ä¿®æ”¹ç”¨æˆ·ä¿¡æ¯
+void viewUserInformation();// æŸ¥çœ‹æ‰€æœ‰ç”¨æˆ·ä¿¡æ¯ï¼ˆè€æ¿å’Œç®¡ç†æŸ¥çœ‹ 
+void addGoodsMenu();//æ·»åŠ èœå“ä¿¡æ¯
+void changeGoods();//ä¿®æ”¹èœå“ä¿¡æ¯
+void bossMenu();// è€æ¿èœå•
+void shouru(); //æŸ¥çœ‹æ€»æ”¶å…¥
 
-void deleteGoods();//É¾³ı²ËÆ·ĞÅÏ¢
-void lookall(); //ÒÑÍê³ÉºÍÎ´Íê³ÉÊıÁ¿ ºÍ½ğ¶î
-void bossSearchByDanju();  //Í¨¹ıµ¥¾İºÅ²éÕÒ¶ÔÓ¦µãµÄ²ËÆ·
+void deleteGoods();//åˆ é™¤èœå“ä¿¡æ¯
+void lookall(); //å·²å®Œæˆå’Œæœªå®Œæˆæ•°é‡ å’Œé‡‘é¢
+void bossSearchByDanju();  //é€šè¿‡å•æ®å·æŸ¥æ‰¾å¯¹åº”ç‚¹çš„èœå“
 
-// ²ËÆ·½á¹¹Ìå 
+// èœå“ç»“æ„ä½“ 
 struct Goods {
     int id;
     string name;
@@ -67,71 +67,71 @@ struct Goods {
     double price;
 };
 
-// ²ÍÎ»½á¹¹Ìå
+// é¤ä½ç»“æ„ä½“
 struct zuowei {
     int number;
     string seat;
     int use;
     int people;
-    string reservationTime; //Ô¤¶¨Ê±¼ä 
-    string userName; //ĞÂÔöÓÃ»§Ãû 
-    int customerCount; // ĞÂÔö¹Ë¿ÍÈËÊı³ÉÔ±±äÁ¿
+    string reservationTime; //é¢„å®šæ—¶é—´ 
+    string userName; //æ–°å¢ç”¨æˆ·å 
+    int customerCount; // æ–°å¢é¡¾å®¢äººæ•°æˆå‘˜å˜é‡
 };
 
-// ÓÃ»§½á¹¹Ìå
+// ç”¨æˆ·ç»“æ„ä½“
 struct User {
     string usname;
     string password;
     string role;
 };
 
-// ÏúÊÛ¼ÇÂ¼½á¹¹Ìå
+// é”€å”®è®°å½•ç»“æ„ä½“
 struct SaleSummary {
-    int danju; // µ¥¾İºÅ 
-    double allmoney; // ×Ü½ğ¶î 
+    int danju; // å•æ®å· 
+    double allmoney; // æ€»é‡‘é¢ 
 };
 
-// ¼ÓÔØĞ¡Æ±ÏêÏ¸Êı¾İ
+// åŠ è½½å°ç¥¨è¯¦ç»†æ•°æ®
 struct SaleDetail {
-    int danju; //µ¥¾İºÅ 
-    string dishName; //ÉÌÆ·Ãû³Æ 
-    double dishPrice; //µ¥¼Û 
-    int quantity;//ÊıÁ¿ 
+    int danju; //å•æ®å· 
+    string dishName; //å•†å“åç§° 
+    double dishPrice; //å•ä»· 
+    int quantity;//æ•°é‡ 
 };
 
-// ÏúÊÛ¼ÇÂ¼½á¹¹Ìå
+// é”€å”®è®°å½•ç»“æ„ä½“
 struct Sale {
-    int salenumber[100]; // ¼ÙÉè×î¶à 100 ¸öÏúÊÛ¼ÇÂ¼
+    int salenumber[100]; // å‡è®¾æœ€å¤š 100 ä¸ªé”€å”®è®°å½•
     int goodsid[100];
-    char salename[100][50]; // ¼ÙÉèÃû³Æ³¤¶È²»³¬¹ı 50
+    char salename[100][50]; // å‡è®¾åç§°é•¿åº¦ä¸è¶…è¿‡ 50
     double saledanjia[100];
-    double allmoney; //×Ü½ğ¶î 
-    int danju; //µ¥¾İºÅ 
-    int salenumberCount; // ÓÃÓÚ¼ÇÂ¼Êµ¼ÊµÄÏúÊÛÊıÁ¿
+    double allmoney; //æ€»é‡‘é¢ 
+    int danju; //å•æ®å· 
+    int salenumberCount; // ç”¨äºè®°å½•å®é™…çš„é”€å”®æ•°é‡
     int goodsidCount;
     int salenameCount;
     int saledanjiaCount;
 };
 
-// µã²Í½á¹¹Ìå
+// ç‚¹é¤ç»“æ„ä½“
 struct Dish {
     string dishName;
     string dishCategory;
     double dishPrice;
-    int dishStatus; // 0: Î´×¼±¸, 1: ×¼±¸ÖĞ, 2: ÒÑÍê³É
+    int dishStatus; // 0: æœªå‡†å¤‡, 1: å‡†å¤‡ä¸­, 2: å·²å®Œæˆ
     int quantity;
 };
 
 
 
-#define MAX_GOODS 1000  // ¼ÙÉè×î´óÉÌÆ·ÊıÁ¿Îª 1000
-#define MAX_TABLES 100  // ¼ÙÉè×î´ó²ÍÎ»ÊıÁ¿Îª 100
-#define MAX_SALES 100  // ¼ÙÉè×î´óÏúÊÛ¼ÇÂ¼ÊıÁ¿Îª 100
-#define MAX_USERS 100  // ¼ÙÉè×î´óÓÃ»§ÊıÁ¿Îª 100
-#define MAX_DISHES 1000 // ¼ÙÉè×î´ó²ËÆ·ÊıÁ¿Îª 1000
+#define MAX_GOODS 1000  // å‡è®¾æœ€å¤§å•†å“æ•°é‡ä¸º 1000
+#define MAX_TABLES 100  // å‡è®¾æœ€å¤§é¤ä½æ•°é‡ä¸º 100
+#define MAX_SALES 100  // å‡è®¾æœ€å¤§é”€å”®è®°å½•æ•°é‡ä¸º 100
+#define MAX_USERS 100  // å‡è®¾æœ€å¤§ç”¨æˆ·æ•°é‡ä¸º 100
+#define MAX_DISHES 1000 // å‡è®¾æœ€å¤§èœå“æ•°é‡ä¸º 1000
 
-Goods goods[MAX_GOODS]; //goods½á¹¹ÌåÊı×é  ÓÃÓÚ´æ´¢ÄÜ¹»Ìá¹©µÄ²ËÆ· 
-int goodsCount = 0; //ÊıÁ¿  
+Goods goods[MAX_GOODS]; //goodsç»“æ„ä½“æ•°ç»„  ç”¨äºå­˜å‚¨èƒ½å¤Ÿæä¾›çš„èœå“ 
+int goodsCount = 0; //æ•°é‡  
 zuowei tables[MAX_TABLES]; 
 int tableCount = 0;
 SaleSummary saleSummary[MAX_SALES];
@@ -142,123 +142,123 @@ User id[MAX_USERS];
 int userCount = 0;
 Sale sale[MAX_SALES];
 int saleCount = 0;
-Dish dishes[MAX_DISHES]; // Ãû×Ö ÖÖÀà ¼Û¸ñ ×´Ì¬ ÊıÁ¿  
+Dish dishes[MAX_DISHES]; // åå­— ç§ç±» ä»·æ ¼ çŠ¶æ€ æ•°é‡  
 int dishCount = 0;//
 int pass = 0;
 
-//Ö÷½çÃæ 
+//ä¸»ç•Œé¢ 
 void mainmenu() {
-    system("cls");  //ÇåÆÁ
+    system("cls");  //æ¸…å±
     cout << "***************************************************" << endl;
-    cout << "                 ÇëÑ¡ÔñÒª½øĞĞµÄ²Ù×÷                " << endl;
+    cout << "                 è¯·é€‰æ‹©è¦è¿›è¡Œçš„æ“ä½œ                " << endl;
     cout << "***************************************************" << endl;
-    cout << "*        1.Ïû·ÑÕß×ÓÏµÍ³     2.³øÊ¦×ÓÏµÍ³          *" << endl;
+    cout << "*        1.æ¶ˆè´¹è€…å­ç³»ç»Ÿ     2.å¨å¸ˆå­ç³»ç»Ÿ          *" << endl;
     cout << "*                                                 *" << endl;
-    cout << "*        3.·şÎñÔ±×ÓÏµÍ³     4.ÊÕÒøÔ±×ÓÏµÍ³        *" << endl;
+    cout << "*        3.æœåŠ¡å‘˜å­ç³»ç»Ÿ     4.æ”¶é“¶å‘˜å­ç³»ç»Ÿ        *" << endl;
     cout << "*                                                 *" << endl;
-    cout << "*        5.¹ÜÀíÔ±×ÓÏµÍ³     6.²ÍÌüÀÏ°å×ÓÏµÍ³      *" << endl;
+    cout << "*        5.ç®¡ç†å‘˜å­ç³»ç»Ÿ     6.é¤å…è€æ¿å­ç³»ç»Ÿ      *" << endl;
     cout << "*                                                 *" << endl;
-    cout << "*        0.ÍË³öÏµÍ³                               *" << endl;
+    cout << "*        0.é€€å‡ºç³»ç»Ÿ                               *" << endl;
     cout << "***************************************************" << endl;
-    cout<<"ÇëÑ¡Ôñ£º"<<endl;
+    cout<<"è¯·é€‰æ‹©ï¼š"<<endl;
     char select;
     cin>>select;
     switch(select){
         case '1':
-            //login(1);  // ÏÈµÇÂ¼£¬ÔÙ½øÈëÏû·ÑÕß×ÓÏµÍ³
+            //login(1);  // å…ˆç™»å½•ï¼Œå†è¿›å…¥æ¶ˆè´¹è€…å­ç³»ç»Ÿ
             consumerMenu();  
             break;
         case '2':
-          //  login(2);  // ÏÈµÇÂ¼£¬ÔÙ½øÈë³øÊ¦×ÓÏµÍ³
+          //  login(2);  // å…ˆç™»å½•ï¼Œå†è¿›å…¥å¨å¸ˆå­ç³»ç»Ÿ
             chefMenu();  
             break;
         case '3':
         //	login(3);
-       		serverSubsytemMenu();//·şÎñÔ±×ÓÏµÍ³ 
+       		serverSubsytemMenu();//æœåŠ¡å‘˜å­ç³»ç»Ÿ 
         	break;
         case '4':
-          //  login(4);  // ÏÈµÇÂ¼£¬ÔÙ½øÈëÊÕÒøÔ±×ÓÏµÍ³
+          //  login(4);  // å…ˆç™»å½•ï¼Œå†è¿›å…¥æ”¶é“¶å‘˜å­ç³»ç»Ÿ
             cashierMenu();  
             break;
         case '5': 
-          //  login(5);  // ÏÈµÇÂ¼£¬ÔÙ½øÈë¹ÜÀíÔ±×ÓÏµÍ³
+          //  login(5);  // å…ˆç™»å½•ï¼Œå†è¿›å…¥ç®¡ç†å‘˜å­ç³»ç»Ÿ
             manageMenu();  
             break;
         case '6':
-          //  login(6);  // ÏÈµÇÂ¼£¬ÔÙ½øÈë²ÍÌüÀÏ°å×ÓÏµÍ³
+          //  login(6);  // å…ˆç™»å½•ï¼Œå†è¿›å…¥é¤å…è€æ¿å­ç³»ç»Ÿ
             bossMenu();  
             break;
         case '0':
-            exit(0);   //Õı³£ÍË³öÏµÍ³ 
+            exit(0);   //æ­£å¸¸é€€å‡ºç³»ç»Ÿ 
             break;
         default:
-            cout<<"´íÎóÊäÈë£¡£¡£¡"<<endl;  //´íÎóÊäÈë 
-            cout<<"ÇëÖØĞÂÊäÈë£º"<<endl;
-            cin>>select;  //ÖØĞÂÊäÈë
+            cout<<"é”™è¯¯è¾“å…¥ï¼ï¼ï¼"<<endl;  //é”™è¯¯è¾“å…¥ 
+            cout<<"è¯·é‡æ–°è¾“å…¥ï¼š"<<endl;
+            cin>>select;  //é‡æ–°è¾“å…¥
             mainmenu(); 
     }
 }
 
-// ÏÔÊ¾ÓÃ»§Ñ¡Ôñ½çÃæ
+// æ˜¾ç¤ºç”¨æˆ·é€‰æ‹©ç•Œé¢
 void showUserSelection() {
     cout << "***************************************************" << endl;
-    cout << "               ²ÍÌü¹ÜÀíÏµÍ³ÓÃ»§Ñ¡Ôñ½çÃæ            " << endl;
+    cout << "               é¤å…ç®¡ç†ç³»ç»Ÿç”¨æˆ·é€‰æ‹©ç•Œé¢            " << endl;
     cout << "***************************************************" << endl;
-    cout << "*        1. µÇÂ¼        2. ×¢²áÓÃ»§               *" << endl;
+    cout << "*        1. ç™»å½•        2. æ³¨å†Œç”¨æˆ·               *" << endl;
     cout << "*                                                 *" << endl;
-    cout << "*        3. ÍË³öÏµÍ³                              *" << endl;
+    cout << "*        3. é€€å‡ºç³»ç»Ÿ                              *" << endl;
     cout << "*                                                 *" << endl;
     cout << "***************************************************" << endl;
-    cout << "ÇëÊäÈëÄúµÄÑ¡Ôñ£º";
+    cout << "è¯·è¾“å…¥æ‚¨çš„é€‰æ‹©ï¼š";
 }
 
-// ×¢²áÓÃ»§
+// æ³¨å†Œç”¨æˆ·
 void registerUser() {
     string username, password, role;
-    cout << "ÇëÊäÈëÓÃ»§Ãû: ";
+    cout << "è¯·è¾“å…¥ç”¨æˆ·å: ";
     cin >> username;
-    cout << "ÇëÊäÈëÃÜÂë: ";
+    cout << "è¯·è¾“å…¥å¯†ç : ";
     cin >> password;
-    cout << "ÇëÊäÈë½ÇÉ«: ";
+    cout << "è¯·è¾“å…¥è§’è‰²: ";
     cin >> role;
 
-    // ¼ì²éÓÃ»§ÃûÊÇ·ñÒÑ´æÔÚ
+    // æ£€æŸ¥ç”¨æˆ·åæ˜¯å¦å·²å­˜åœ¨
     bool exists = false;
     for (int i = 0; i < userCount; i++) {
         if (id[i].usname == username) {
             exists = true;
-            cout << "¸ÃÓÃ»§ÃûÒÑ´æÔÚ£¬ÇëÖØĞÂÊäÈë£¡" << endl;
-            registerUser(); // ÖØ¸´Ñ­»·×¢²áÓÃ»§ 
+            cout << "è¯¥ç”¨æˆ·åå·²å­˜åœ¨ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
+            registerUser(); // é‡å¤å¾ªç¯æ³¨å†Œç”¨æˆ· 
         }
     }
-    // Ìí¼ÓĞÂÓÃ»§
-    id[userCount] = {username, password, role}; // ´¢´æµ½ÎÄ¼şÖ®ÖĞ 
+    // æ·»åŠ æ–°ç”¨æˆ·
+    id[userCount] = {username, password, role}; // å‚¨å­˜åˆ°æ–‡ä»¶ä¹‹ä¸­ 
     userCount++;
     ofstream userFile("users.txt", ios::app);
     if (userFile.is_open()) {
         userFile << username << " " << password << " " << role << endl;
         userFile.close();
-        cout << "ÓÃ»§×¢²á³É¹¦£¡" << endl;
+        cout << "ç”¨æˆ·æ³¨å†ŒæˆåŠŸï¼" << endl;
     } else {
-        cout << "ÎŞ·¨´ò¿ªÓÃ»§ÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€ç”¨æˆ·æ–‡ä»¶" << endl;
     }
-    showUserSelection(); // ´Ë´¦µÇÂ¼Ó¦µ±ÓĞËùĞŞ¸Ä£¨»¹Ã»ÓĞ¸Ä 
+    showUserSelection(); // æ­¤å¤„ç™»å½•åº”å½“æœ‰æ‰€ä¿®æ”¹ï¼ˆè¿˜æ²¡æœ‰æ”¹ 
 }
 
-// µÇÂ¼º¯Êı 
+// ç™»å½•å‡½æ•° 
 void login(int a) {
     string username, password;
-    int attempts = 3; // ÏŞÖÆµÇÂ¼³¢ÊÔ´ÎÊı
+    int attempts = 3; // é™åˆ¶ç™»å½•å°è¯•æ¬¡æ•°
     while (attempts > 0) {
-        cout << "ÇëÊäÈëÓÃ»§Ãû: ";
+        cout << "è¯·è¾“å…¥ç”¨æˆ·å: ";
         cin >> username;
-        cout << "ÇëÊäÈëÃÜÂë: ";
+        cout << "è¯·è¾“å…¥å¯†ç : ";
         cin >> password;
         bool found = false;
         for (int i = 0; i < userCount; i++) {
             if (id[i].usname == username && id[i].password == password) {
                 pass = i;
-                // ¼ì²éÓÃ»§½ÇÉ«ÊÇ·ñÆ¥Åä
+                // æ£€æŸ¥ç”¨æˆ·è§’è‰²æ˜¯å¦åŒ¹é…
                 if ((a == 1 && id[i].role == "consumer") || 
                     (a == 2 && id[i].role == "chef") || 
                     (a == 3 && id[i].role == "server") ||
@@ -268,7 +268,7 @@ void login(int a) {
                     found = true;
                     break;
                 } else {
-                    cout << "ÄãÃ»ÓĞÈ¨ÏŞ½øÈë¸Ã×ÓÏµÍ³£¬ÇëÖØĞÂµÇÂ¼¡£" << endl;
+                    cout << "ä½ æ²¡æœ‰æƒé™è¿›å…¥è¯¥å­ç³»ç»Ÿï¼Œè¯·é‡æ–°ç™»å½•ã€‚" << endl;
                     break;
                 }
             }
@@ -278,17 +278,17 @@ void login(int a) {
             break;
         } else {
             attempts--;
-            cout << "ÓÃ»§Ãû»òÃÜÂë´íÎó£¬»¹ÓĞ " << attempts << " ´Î³¢ÊÔ»ú»á£¡" << endl;
+            cout << "ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯ï¼Œè¿˜æœ‰ " << attempts << " æ¬¡å°è¯•æœºä¼šï¼" << endl;
         }
     }
 
     if (attempts == 0) {
-        cout << "µÇÂ¼Ê§°Ü£¬ÍË³ö³ÌĞò¡£" << endl;
+        cout << "ç™»å½•å¤±è´¥ï¼Œé€€å‡ºç¨‹åºã€‚" << endl;
         exit(0);
     }
 }
 
-//ÏÔÊ¾ÈÕÆÚ//cout <<ÄêÔÂÈÕ Ğ¡Ê±·ÖÖÓÃë 
+//æ˜¾ç¤ºæ—¥æœŸ//cout <<å¹´æœˆæ—¥ å°æ—¶åˆ†é’Ÿç§’ 
 void riqi() {
     time_t t = time(0);
     char tmp[32];
@@ -296,7 +296,7 @@ void riqi() {
     cout << tmp << endl;
 }
 
-// ¼ÓÔØÓÃ»§Êı¾İ 
+// åŠ è½½ç”¨æˆ·æ•°æ® 
 void loadUsers() {
     ifstream userFile("users.txt");
     if (userFile.is_open()) {
@@ -307,11 +307,11 @@ void loadUsers() {
         }
         userFile.close();
     } else {
-        cout << "ÎŞ·¨´ò¿ªÓÃ»§ÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€ç”¨æˆ·æ–‡ä»¶" << endl;
     }
 }
 
-// ¼ÓÔØ²ÍÎ»Êı¾İµ½tablesÊı×é 
+// åŠ è½½é¤ä½æ•°æ®åˆ°tablesæ•°ç»„ 
 void loadTables() {
     ifstream tableFile("tables.txt");
     if (tableFile.is_open()) {
@@ -322,11 +322,11 @@ void loadTables() {
         }
         tableFile.close();
     } else {
-        cout << "ÎŞ·¨´ò¿ª²ÍÎ»ÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€é¤ä½æ–‡ä»¶" << endl;
     }
 }
 
-//¼ÓÔØ²ËÆ·Êı¾İ µ½goodsÊı×éÖĞ 
+//åŠ è½½èœå“æ•°æ® åˆ°goodsæ•°ç»„ä¸­ 
 void loadGoods() {
     ifstream goodsFile("goods.txt");
     if (goodsFile.is_open()) {
@@ -337,11 +337,11 @@ void loadGoods() {
         }
         goodsFile.close();
     } else {
-        cout << "ÎŞ·¨´ò¿ªÉÌÆ·ÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€å•†å“æ–‡ä»¶" << endl;
     }
 }
 
-// ¼ÓÔØĞ¡Æ±¸ÅÒªĞÅÏ¢
+// åŠ è½½å°ç¥¨æ¦‚è¦ä¿¡æ¯
 void loadSaleSummary() {
     ifstream summaryFile("sales_summary.txt");
     if (summaryFile.is_open()) {
@@ -354,21 +354,21 @@ void loadSaleSummary() {
                     saleSummary[saleSummaryCount] = record;
                     saleSummaryCount++;
                 } else {
-                    cout << "ÏúÊÛ¸ÅÒªÊı¾İ´æ´¢ÒÑÂú£¬ÎŞ·¨¼ÌĞøÌí¼Ó¡£" << endl;
+                    cout << "é”€å”®æ¦‚è¦æ•°æ®å­˜å‚¨å·²æ»¡ï¼Œæ— æ³•ç»§ç»­æ·»åŠ ã€‚" << endl;
                     break;
                 }
             } else {
-                cout << "¶ÁÈ¡ÏúÊÛ¸ÅÒªÊı¾İÊ±·¢Éú´íÎó¡£" << endl;
+                cout << "è¯»å–é”€å”®æ¦‚è¦æ•°æ®æ—¶å‘ç”Ÿé”™è¯¯ã€‚" << endl;
                 break;
             }
         }
         summaryFile.close();
     } else {
-        cout << "ÎŞ·¨´ò¿ªÏúÊÛ¸ÅÒªÎÄ¼ş¡£" << endl;
+        cout << "æ— æ³•æ‰“å¼€é”€å”®æ¦‚è¦æ–‡ä»¶ã€‚" << endl;
     }
 }
 
-//¼ÓÔØĞ¡Æ±ÏêÏ¸ĞÅÏ¢
+//åŠ è½½å°ç¥¨è¯¦ç»†ä¿¡æ¯
 void loadSaleDetail() {
     ifstream detailFile("sales_detail.txt");
     if (detailFile.is_open()) {
@@ -381,102 +381,102 @@ void loadSaleDetail() {
                     saleDetail[saleDetailCount] = record;
                     saleDetailCount++;
                 } else {
-                    cout << "Ğ¡Æ±ÏêÏ¸Êı¾İ´æ´¢ÒÑÂú£¬ÎŞ·¨¼ÌĞøÌí¼Ó¡£" << endl;
+                    cout << "å°ç¥¨è¯¦ç»†æ•°æ®å­˜å‚¨å·²æ»¡ï¼Œæ— æ³•ç»§ç»­æ·»åŠ ã€‚" << endl;
                     break;
                 }
             } else {
-                cout << "¶ÁÈ¡Ğ¡Æ±ÏêÏ¸Êı¾İÊ±·¢Éú´íÎó¡£" << endl;
+                cout << "è¯»å–å°ç¥¨è¯¦ç»†æ•°æ®æ—¶å‘ç”Ÿé”™è¯¯ã€‚" << endl;
                 break;
             }
         }
         detailFile.close();
     } else {
-        cout << "ÎŞ·¨´ò¿ªĞ¡Æ±ÏêÏ¸ÎÄ¼ş¡£" << endl;
+        cout << "æ— æ³•æ‰“å¼€å°ç¥¨è¯¦ç»†æ–‡ä»¶ã€‚" << endl;
     }
 }
 
-//ÏÔÊ¾²ËÆ·ĞÅÏ¢ £¨ÒÑ¾­ÌáÇ°¼ÓÔØÖÁgoodsÊı×éÖĞ £¨Good½á¹¹ÌåÎª»ù´¡ 
+//æ˜¾ç¤ºèœå“ä¿¡æ¯ ï¼ˆå·²ç»æå‰åŠ è½½è‡³goodsæ•°ç»„ä¸­ ï¼ˆGoodç»“æ„ä½“ä¸ºåŸºç¡€ 
 void displayDishes() {
-    cout << "*************************È«²¿²ËÆ·ĞÅÏ¢ÈçÏÂ*************************" << endl;
-    cout << "      ²ËÆ·Ãû³Æ       ²ËÆ·Àà±ğ      ²ËÆ·¼Û¸ñ" << endl;
+    cout << "*************************å…¨éƒ¨èœå“ä¿¡æ¯å¦‚ä¸‹*************************" << endl;
+    cout << "      èœå“åç§°       èœå“ç±»åˆ«      èœå“ä»·æ ¼" << endl;
     for (int i = 0; i < goodsCount; i++) {
         cout <<setw(14)<< goods[i].name << setw(13) << goods[i].category << setw(13) << goods[i].price << endl;
     }
     cout << "*******************************************************************" << endl;
 }
 
-// Êä³öËùÓĞµÄ²Í×ÀĞÅÏ¢ £¨ÒÑ¾­ÌáÇ°¼ÓÔØµ½tablesÊı×éÖĞ 
+// è¾“å‡ºæ‰€æœ‰çš„é¤æ¡Œä¿¡æ¯ ï¼ˆå·²ç»æå‰åŠ è½½åˆ°tablesæ•°ç»„ä¸­ 
 void viewTables() {
-    cout << "**************************************È«²¿²ÍÎ»ĞÅÏ¢ÈçÏÂ**************************************" << endl;
-    cout << "²ÍÎ»±àºÅ    ²ÍÎ»Î»ÖÃ    ²ÍÎ»×´Ì¬    ¿ÉÈİÄÉÈËÊı          Ô¤¶©Ê±¼ä        Ô¤¶©ÓÃ»§    ¹Ë¿ÍÈËÊı" << endl;
+    cout << "**************************************å…¨éƒ¨é¤ä½ä¿¡æ¯å¦‚ä¸‹**************************************" << endl;
+    cout << "é¤ä½ç¼–å·    é¤ä½ä½ç½®    é¤ä½çŠ¶æ€    å¯å®¹çº³äººæ•°          é¢„è®¢æ—¶é—´        é¢„è®¢ç”¨æˆ·    é¡¾å®¢äººæ•°" << endl;
     for (int i = 0; i < tableCount; i++) {
         cout <<setw(3)<< tables[i].number << setw(16) << tables[i].seat << setw(11);
         if (tables[i].use == 0) {
-            cout << "¿ÕÏĞ";
+            cout << "ç©ºé—²";
         } else {
-            cout << "ÒÑÔ¤¶©";
+            cout << "å·²é¢„è®¢";
         }
         cout << setw(10) << tables[i].people << setw(26)<< tables[i].reservationTime << setw(11) << tables[i].userName << setw(10) << tables[i].customerCount << endl;
     }
     cout << "********************************************************************************************" << endl;
 }
 
-// Ô¤¶¨²ÍÎ»
+// é¢„å®šé¤ä½
 void reserveTable() {
-    // ÏÈÊä³öËùÓĞµÄ²Í×ÀĞÅÏ¢
+    // å…ˆè¾“å‡ºæ‰€æœ‰çš„é¤æ¡Œä¿¡æ¯
     viewTables();
     int number;
     int customerNum;
     string username;
     while (true) {
-        cout << "ÇëÊäÈëÒªÔ¤¶©µÄ²ÍÎ»±àºÅ£º" << endl;
+        cout << "è¯·è¾“å…¥è¦é¢„è®¢çš„é¤ä½ç¼–å·ï¼š" << endl;
         cin >> number;
         bool k = false;
         for (int i = 0; i < tableCount; i++) {
             if (tables[i].number == number && tables[i].use == 0) {
                 k = true;
                 tables[i].use = 1; 
-                cout << "ÇëÊäÈëÔ¤¶¨Ãû" << endl;
+                cout << "è¯·è¾“å…¥é¢„å®šå" << endl;
                 cin >> username;
-                // ¼ÇÂ¼Ô¤¶¨ÓÃ»§µÄÓÃ»§Ãû
+                // è®°å½•é¢„å®šç”¨æˆ·çš„ç”¨æˆ·å
                 tables[i].userName = username; 
-                // ÈÃÓÃ»§ÊäÈë¹Ë¿ÍÈËÊı
-                cout << "ÇëÊäÈë¸Ã×ÀµÄ¹Ë¿ÍÈËÊı£º" << endl;
+                // è®©ç”¨æˆ·è¾“å…¥é¡¾å®¢äººæ•°
+                cout << "è¯·è¾“å…¥è¯¥æ¡Œçš„é¡¾å®¢äººæ•°ï¼š" << endl;
                 cin >> customerNum;
                 tables[i].customerCount = customerNum; 
-                // ¼ÇÂ¼Ô¤¶¨Ê±¼ä
+                // è®°å½•é¢„å®šæ—¶é—´
                 time_t t = time(0);
                 char tmp[32] = {0};
                 strftime(tmp, sizeof(tmp), "%Y-%m-%d-%H:%M:%S", localtime(&t)); 
-                tables[i].reservationTime = tmp; //±¾µØÊ±¼ä 
-                saveTables();  //±£´æ 
+                tables[i].reservationTime = tmp; //æœ¬åœ°æ—¶é—´ 
+                saveTables();  //ä¿å­˜ 
                 break;
             }
         }
         if (!k) {
-            cout << "Ã»ÓĞ¿ÉÓÃµÄ¸Ã±àºÅ²ÍÎ»£¬ÇëÖØĞÂÑ¡Ôñ£¡" << endl;
+            cout << "æ²¡æœ‰å¯ç”¨çš„è¯¥ç¼–å·é¤ä½ï¼Œè¯·é‡æ–°é€‰æ‹©ï¼" << endl;
         } else {
             break;
         }
     }
-    cout << "ÊäÈë¡°·µ»Ø¡±ÒÔ·µ»Ø" << endl;
-    string mm, mmm = "·µ»Ø";
+    cout << "è¾“å…¥â€œè¿”å›â€ä»¥è¿”å›" << endl;
+    string mm, mmm = "è¿”å›";
     cin >> mm;
     if (mm == mmm) {
         manageTables(); 
     }
 }
 
-// ¹ÜÀí²ÍÎ»ĞÅÏ¢
+// ç®¡ç†é¤ä½ä¿¡æ¯
 void manageTables() {
     int choice;
     while (true) {
         cout << "***************************************************" << endl;
-        cout << "                 ÇëÑ¡ÔñÒª½øĞĞµÄ²Ù×÷                " << endl;
+        cout << "                 è¯·é€‰æ‹©è¦è¿›è¡Œçš„æ“ä½œ                " << endl;
         cout << "***************************************************" << endl;
-        cout << "*        1.Ô¤¶©²ÍÎ»        2.²é¿´²ÍÎ»ĞÅÏ¢         *" << endl;
+        cout << "*        1.é¢„è®¢é¤ä½        2.æŸ¥çœ‹é¤ä½ä¿¡æ¯         *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*        3.·µ»ØÖ÷²Ëµ¥        4.ÍË³ö               *" << endl;
+        cout << "*        3.è¿”å›ä¸»èœå•        4.é€€å‡º               *" << endl;
         cout << "*                                                 *" << endl;
         cout << "***************************************************" << endl;
         cin >> choice;
@@ -494,15 +494,15 @@ void manageTables() {
         	exit(0); 
             break;
         default:
-            cout << "ÎŞĞ§µÄÑ¡Ôñ£¬ÇëÖØĞÂÊäÈë£¡" << endl;
+            cout << "æ— æ•ˆçš„é€‰æ‹©ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
             continue;
         }
         system("pause"); 
         mainmenu();
     }
 }
-////////Êı¾İ±£´æ 
-// ±£´æÉÌÆ·ĞÅÏ¢µ½ÎÄ¼ş
+////////æ•°æ®ä¿å­˜ 
+// ä¿å­˜å•†å“ä¿¡æ¯åˆ°æ–‡ä»¶
 void saveGoods() {
     ofstream goodsFile("goods.txt");
     if (goodsFile.is_open()) {
@@ -511,12 +511,12 @@ void saveGoods() {
         }
         goodsFile.close();
     } else {
-        cout << "ÎŞ·¨´ò¿ªÉÌÆ·ÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€å•†å“æ–‡ä»¶" << endl;
     }
 }
 
 
-// ±£´æ²ÍÎ»ĞÅÏ¢µ½ÎÄ¼ş
+// ä¿å­˜é¤ä½ä¿¡æ¯åˆ°æ–‡ä»¶
 void saveTables() {
     ofstream myfile("tables.txt");
     if (myfile.is_open()) {
@@ -525,11 +525,11 @@ void saveTables() {
         }
         myfile.close();
     } else {
-        cout << "ÎŞ·¨´ò¿ªÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€æ–‡ä»¶" << endl;
     }
 }
 
-// ±£´æÓÃ»§ĞÅÏ¢µ½ÎÄ¼ş£¨ÓÃ»§Ãû ÃÜÂë Ö°Î» 
+// ä¿å­˜ç”¨æˆ·ä¿¡æ¯åˆ°æ–‡ä»¶ï¼ˆç”¨æˆ·å å¯†ç  èŒä½ 
 void saveUsers() {
     ofstream userFile("users.txt");
     if (userFile.is_open()) {
@@ -538,25 +538,25 @@ void saveUsers() {
         }
         userFile.close();
     } else {
-        cout << "ÎŞ·¨´ò¿ªÓÃ»§ÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€ç”¨æˆ·æ–‡ä»¶" << endl;
     }
 }
 
-// ÏÔÊ¾Ö¸¶¨×ÀºÅÒÑµãµÄ²ËÆ·ĞÅÏ¢
+// æ˜¾ç¤ºæŒ‡å®šæ¡Œå·å·²ç‚¹çš„èœå“ä¿¡æ¯
 void showOrderedDishes(int tableNumber) {
     ifstream orderFile("orders.txt");
     if (orderFile.is_open()) {
         bool foundTable = false;
         string line;
-        cout << "ÒÑµã²ËÆ·ÈçÏÂ£º" << endl;
-        cout << "²ËÆ·Ãû³Æ     ÊıÁ¿    ×´Ì¬    µ¥¼Û" << endl;
+        cout << "å·²ç‚¹èœå“å¦‚ä¸‹ï¼š" << endl;
+        cout << "èœå“åç§°     æ•°é‡    çŠ¶æ€    å•ä»·" << endl;
         while (getline(orderFile, line)) {
             istringstream iss(line);
-            int storedTableNumber; //±àºÅ 
-            string storedDishName; //Ãû³Æ 
-            int storedQuantity; //ÊıÁ¿  
-            int storedDishStatus; //×´Ì¬ 
-            double storedDishPrice; // µ¥¼Û
+            int storedTableNumber; //ç¼–å· 
+            string storedDishName; //åç§° 
+            int storedQuantity; //æ•°é‡  
+            int storedDishStatus; //çŠ¶æ€ 
+            double storedDishPrice; // å•ä»·
             iss >> storedTableNumber >> storedDishName >> storedQuantity >> storedDishStatus >> storedDishPrice;
             if (storedTableNumber == tableNumber) {
                 foundTable = true;
@@ -565,33 +565,33 @@ void showOrderedDishes(int tableNumber) {
         }
         orderFile.close();
         if (!foundTable) {
-            cout << "¸Ã×ÀºÅÉĞÎ´µã²Í¡£" << endl;
+            cout << "è¯¥æ¡Œå·å°šæœªç‚¹é¤ã€‚" << endl;
         }
     } else {
-        cout << "ÎŞ·¨´ò¿ªÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€æ–‡ä»¶" << endl;
     }
 }
 
-// Îª¹Ë¿Íµã²ËÒÔ¼°¹Ë¿Íµã²Ë¾ùÊ¹ÓÃÕâ¸ö 
+// ä¸ºé¡¾å®¢ç‚¹èœä»¥åŠé¡¾å®¢ç‚¹èœå‡ä½¿ç”¨è¿™ä¸ª 
 void takeOrder() {
     int tableNumber;
-    cout << "ÇëÊäÈëÒª¼Ó²ËµÄ×ÀºÅ£º" << endl;
+    cout << "è¯·è¾“å…¥è¦åŠ èœçš„æ¡Œå·ï¼š" << endl;
     cin >> tableNumber;
-    // ÏÔÊ¾¸Ã×ÀÒÑµãµÄ²ËÆ·
+    // æ˜¾ç¤ºè¯¥æ¡Œå·²ç‚¹çš„èœå“
     showOrderedDishes(tableNumber);
-    // ÏÔÊ¾²ËÆ·ĞÅÏ¢
+    // æ˜¾ç¤ºèœå“ä¿¡æ¯
     displayDishes();
     ofstream orderFile("orders.txt", ios::app);
     if (!orderFile.is_open()) {
-        cout << "ÎŞ·¨´ò¿ªÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€æ–‡ä»¶" << endl;
         return;
     }
-    cout << "ÇëÊäÈëÒªµãµÄ²ËÆ·ĞÅÏ¢£¨ÊäÈë¸ñÊ½£º²ËÆ·Ãû³Æ ²ËÆ·ÊıÁ¿£¬ÊäÈë ¡°Íê³É¡± ½áÊø£©" << endl;
+    cout << "è¯·è¾“å…¥è¦ç‚¹çš„èœå“ä¿¡æ¯ï¼ˆè¾“å…¥æ ¼å¼ï¼šèœå“åç§° èœå“æ•°é‡ï¼Œè¾“å…¥ â€œå®Œæˆâ€ ç»“æŸï¼‰" << endl;
     string dishName;
     int quantity;
     while (true) {
         cin >> dishName;
-        if (dishName == "Íê³É") {
+        if (dishName == "å®Œæˆ") {
         	exit(0); 
             break;
         }
@@ -606,44 +606,44 @@ void takeOrder() {
             }
         }
         if (!found) {
-            cout << "²ËÆ·²»´æÔÚ£¬ÇëÖØĞÂÊäÈë£¡" << endl;
+            cout << "èœå“ä¸å­˜åœ¨ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
             continue;
         }
         orderFile << tableNumber << " " << dishName << " " << quantity << " 0 " << price << endl;
-        cout << "µã²Ë³É¹¦£¡" << endl;
+        cout << "ç‚¹èœæˆåŠŸï¼" << endl;
     }
     orderFile.close();
 }
 
-//////////Ïû·ÑÕß 
-// Ïû·ÑÕß²Ëµ¥
+//////////æ¶ˆè´¹è€… 
+// æ¶ˆè´¹è€…èœå•
 void consumerMenu() {
     int choice;
     while (true) {
         cout << "***************************************************" << endl;
-        cout << "                 Ïû·ÑÕß¹¦ÄÜ²Ëµ¥                    " << endl;
+        cout << "                 æ¶ˆè´¹è€…åŠŸèƒ½èœå•                    " << endl;
         cout << "***************************************************" << endl;
-        cout << "*        1.Ô¤¶¨²ÍÎ»        2.µã²Ë                 *" << endl;
+        cout << "*        1.é¢„å®šé¤ä½        2.ç‚¹èœ                 *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*        3.²é¿´Ğ¡Æ±        4.ÍË³ö                 *" << endl;
+        cout << "*        3.æŸ¥çœ‹å°ç¥¨        4.é€€å‡º                 *" << endl;
         cout << "*                                                 *" << endl;
         cout << "***************************************************" << endl;
         cin >> choice;
         switch (choice) {
         case 1:
-            reserveTable(); //µ÷ÓÃÔ¤¶¨º¯Êı 
+            reserveTable(); //è°ƒç”¨é¢„å®šå‡½æ•° 
             break;
         case 2:
             takeOrder();//
             break;
         case 3:
-            viewReceipt(); //ÊäÈë×ÀºÅ²é¿´Ğ¡Æ± 
+            viewReceipt(); //è¾“å…¥æ¡Œå·æŸ¥çœ‹å°ç¥¨ 
             break;
         case 4:
-        	mainmenu(); //·µ»ØÁËÖ÷²Ëµ¥ 
+        	mainmenu(); //è¿”å›äº†ä¸»èœå• 
             break;
         default:
-            cout << "ÎŞĞ§µÄÑ¡Ôñ£¬ÇëÖØĞÂÊäÈë£¡" << endl;
+            cout << "æ— æ•ˆçš„é€‰æ‹©ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
             continue;
         }
         break;
@@ -651,16 +651,16 @@ void consumerMenu() {
 }
 
 
-///3.Ïû·ÑÕß¡¤²é¿´Ğ¡Æ±£¬¸ù¾İÊäÈëµÄ×ÀºÅÊä³ö¶©µ¥ĞÅÏ¢
+///3.æ¶ˆè´¹è€…Â·æŸ¥çœ‹å°ç¥¨ï¼Œæ ¹æ®è¾“å…¥çš„æ¡Œå·è¾“å‡ºè®¢å•ä¿¡æ¯
 void viewReceipt() {
     int tableNumber;
-    cout << "ÇëÊäÈëÒª²é¿´Ğ¡Æ±µÄ×ÀºÅ£º" << endl;
+    cout << "è¯·è¾“å…¥è¦æŸ¥çœ‹å°ç¥¨çš„æ¡Œå·ï¼š" << endl;
     cin >> tableNumber;
     ifstream orderFile("orders.txt");
     if (orderFile.is_open()) {
         bool foundTable = false;
         string line;
-        cout << "       ²ËÆ·Ãû³Æ    ÊıÁ¿    µ¥¼Û    ¼Û¸ñ    ×´Ì¬" << endl;
+        cout << "       èœå“åç§°    æ•°é‡    å•ä»·    ä»·æ ¼    çŠ¶æ€" << endl;
         while (getline(orderFile, line)) {
             istringstream iss(line);
             int storedTableNumber; 
@@ -671,81 +671,81 @@ void viewReceipt() {
             iss >> storedTableNumber >> dishName >> quantity >> dishStatus >> dishPrice;
             if (storedTableNumber == tableNumber) {
                 foundTable = true;
-                double totalPrice = dishPrice * quantity;  // ¼ÆËã¸Ã²ËÆ·µÄ×Ü¼Û
+                double totalPrice = dishPrice * quantity;  // è®¡ç®—è¯¥èœå“çš„æ€»ä»·
                 cout << setw(12) << dishName << setw(12) << quantity << setw(12) << dishPrice << setw(12) << totalPrice << setw(12) ;
-				if(dishStatus==0) cout<< "ÒÑµã²Ë"<< endl;
-				else if(dishStatus==1) cout<< "ÒÑÍê³É"<< endl;
-				else if(dishStatus==3) cout<< "ÒÑÉÏ²Ë"<< endl;
+				if(dishStatus==0) cout<< "å·²ç‚¹èœ"<< endl;
+				else if(dishStatus==1) cout<< "å·²å®Œæˆ"<< endl;
+				else if(dishStatus==3) cout<< "å·²ä¸Šèœ"<< endl;
             }
         }
         orderFile.close();
         if (!foundTable) {
-            cout << "¸Ã×ÀºÅÉĞÎ´µã²Í¡£" << endl;
+            cout << "è¯¥æ¡Œå·å°šæœªç‚¹é¤ã€‚" << endl;
         }
     } else {
-        cout << "ÎŞ·¨´ò¿ª¶©µ¥ÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€è®¢å•æ–‡ä»¶" << endl;
     }
-    cout << "ÊäÈë¡°·µ»Ø¡±ÒÔ·µ»Ø" << endl;
+    cout << "è¾“å…¥â€œè¿”å›â€ä»¥è¿”å›" << endl;
     string back;
     cin >> back;
-    if (back == "·µ»Ø") {
-        // »ØÏû·ÑÕßÖ÷²Ëµ¥
+    if (back == "è¿”å›") {
+        // å›æ¶ˆè´¹è€…ä¸»èœå•
         consumerMenu();
     } else {
-        viewReceipt(); //¼ÌĞøÑ­»·ÊäÈë²¢²é¿´Ğ¡Æ±ĞÅÏ¢ 
+        viewReceipt(); //ç»§ç»­å¾ªç¯è¾“å…¥å¹¶æŸ¥çœ‹å°ç¥¨ä¿¡æ¯ 
     }
 }
 
-//////////³øÊ¦
-// ³øÊ¦²Ëµ¥
+//////////å¨å¸ˆ
+// å¨å¸ˆèœå•
 void chefMenu() {
     while (true) {
         cout << "***************************************************" << endl;
-        cout << "                »¶Ó­½øÈë³øÊ¦×ÓÏµÍ³                 " << endl;
+        cout << "                æ¬¢è¿è¿›å…¥å¨å¸ˆå­ç³»ç»Ÿ                 " << endl;
         cout << "***************************************************" << endl;
-        cout << "*        1.²é¿´Ğ¡Æ±        2.×ö²Ë                 *" << endl;
+        cout << "*        1.æŸ¥çœ‹å°ç¥¨        2.åšèœ                 *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*        3.²é¿´Í³¼Æ        0.ÍË³öµ½Ö÷²Ëµ¥         *" << endl;
+        cout << "*        3.æŸ¥çœ‹ç»Ÿè®¡        0.é€€å‡ºåˆ°ä¸»èœå•         *" << endl;
         cout << "*                                                 *" << endl;
         cout << "***************************************************" << endl;
-        cout<<"ÇëÑ¡Ôñ£º"<<endl;
+        cout<<"è¯·é€‰æ‹©ï¼š"<<endl;
         int choice;
         cin >> choice;
         switch (choice) {
         case 1:
-            chefViewReceipt(); //²é¿´Ğ¡Æ± 
+            chefViewReceipt(); //æŸ¥çœ‹å°ç¥¨ 
             break;
         case 2:
-            changeDishStatusByChef(); //×ö²Ë ¸Ä±ä²ËÆ·×´Ì¬µ½1
+            changeDishStatusByChef(); //åšèœ æ”¹å˜èœå“çŠ¶æ€åˆ°1
             break;
         case 3:
-            chefViewStatistics(); //²é¿´×ÜÍ³¼Æ ÒÑÍê³ÉºÍÎ´Íê³ÉµÄ²ËÆ· 
+            chefViewStatistics(); //æŸ¥çœ‹æ€»ç»Ÿè®¡ å·²å®Œæˆå’Œæœªå®Œæˆçš„èœå“ 
             break;
         case 0:
             mainmenu();
             break;
         default:
-            cout<<"´íÎóÊäÈë£¡£¡£¡"<<endl; 
-            cout<<"ÇëÖØĞÂÊäÈë:"<<endl;
+            cout<<"é”™è¯¯è¾“å…¥ï¼ï¼ï¼"<<endl; 
+            cout<<"è¯·é‡æ–°è¾“å…¥:"<<endl;
             continue;
         }
         break;
     }
 } 
 
-// 1.³øÊ¦²é¿´Ğ¡Æ±
+// 1.å¨å¸ˆæŸ¥çœ‹å°ç¥¨
 void chefViewReceipt() {
     ifstream orderFile("orders.txt");
     if (orderFile.is_open()) {
         string line;
-        cout << "       ×ÀºÅ    ´ı×ö²ËÆ·Ãû³Æ    ÊıÁ¿" << endl;
+        cout << "       æ¡Œå·    å¾…åšèœå“åç§°    æ•°é‡" << endl;
         while (getline(orderFile, line)) {
             istringstream iss(line);
             int tableNumber;
             string dishName;
             int quantity;
             int dishStatus;
-            // ¼ÙÉè orders.txt ÖĞĞÅÏ¢¸ñÊ½Îª ×ÀºÅ ²ËÆ·Ãû³Æ ÊıÁ¿ ²ËÆ·×´Ì¬
+            // å‡è®¾ orders.txt ä¸­ä¿¡æ¯æ ¼å¼ä¸º æ¡Œå· èœå“åç§° æ•°é‡ èœå“çŠ¶æ€
             iss >> tableNumber >> dishName >> quantity >> dishStatus;
             if (dishStatus== 0) {
                 cout << setw(10) << tableNumber << setw(14) << dishName << setw(10) << quantity << endl;
@@ -753,12 +753,12 @@ void chefViewReceipt() {
         }
         orderFile.close();
     } else {
-        cout << "ÎŞ·¨´ò¿ª¶©µ¥ÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€è®¢å•æ–‡ä»¶" << endl;
     }
 }
 
 
-// ¸üĞÂ orders.txt ÖĞµÄ²ËÆ·×´Ì¬
+// æ›´æ–° orders.txt ä¸­çš„èœå“çŠ¶æ€
 void updateOrdersFile(const string& dishName, int newStatus) {
     ifstream orderFile("orders.txt");
     ofstream tempFile("temp_orders.txt");
@@ -774,7 +774,7 @@ void updateOrdersFile(const string& dishName, int newStatus) {
             double dishiPrice;
             iss >> tableNumber >> storedDishName >> quantity >> dishStatus>>dishiPrice;
             if (storedDishName == dishName) {
-                dishStatus = newStatus;  // ½«²ËÆ·×´Ì¬¸üĞÂÎªÖ¸¶¨×´Ì¬
+                dishStatus = newStatus;  // å°†èœå“çŠ¶æ€æ›´æ–°ä¸ºæŒ‡å®šçŠ¶æ€
                 found = true;
             }
             tempFile << tableNumber << " " << storedDishName << " " << quantity << " " << dishStatus << dishiPrice<<endl;
@@ -782,21 +782,21 @@ void updateOrdersFile(const string& dishName, int newStatus) {
         orderFile.close();
         tempFile.close();
         if (found) {
-            remove("orders.txt"); //É¾³ıÎÄ¼ş 
-            rename("temp_orders.txt", "orders.txt"); //ÖØĞÂÃüÃûÎÄ¼şÃû×Ö 
-            cout << "¶©µ¥ÎÄ¼şÖĞµÄ²ËÆ·×´Ì¬ÒÑ¸üĞÂ¡£" << endl;
+            remove("orders.txt"); //åˆ é™¤æ–‡ä»¶ 
+            rename("temp_orders.txt", "orders.txt"); //é‡æ–°å‘½åæ–‡ä»¶åå­— 
+            cout << "è®¢å•æ–‡ä»¶ä¸­çš„èœå“çŠ¶æ€å·²æ›´æ–°ã€‚" << endl;
         } else {
             remove("temp_orders.txt");
-            cout << "Î´ÕÒµ½¸Ã²ËÆ·µÄ¶©µ¥ĞÅÏ¢£¬ÇëÈ·ÈÏÊäÈëÊÇ·ñÕıÈ·¡£" << endl;
+            cout << "æœªæ‰¾åˆ°è¯¥èœå“çš„è®¢å•ä¿¡æ¯ï¼Œè¯·ç¡®è®¤è¾“å…¥æ˜¯å¦æ­£ç¡®ã€‚" << endl;
         }
     } else {
-        cout << "ÎŞ·¨´ò¿ª¶©µ¥ÎÄ¼ş»òÁÙÊ±ÎÄ¼ş¡£" << endl;
+        cout << "æ— æ³•æ‰“å¼€è®¢å•æ–‡ä»¶æˆ–ä¸´æ—¶æ–‡ä»¶ã€‚" << endl;
     }
 }
 
 
 
-// ²éÕÒÉÌÆ· ID µÄ¸¨Öúº¯Êı
+// æŸ¥æ‰¾å•†å“ ID çš„è¾…åŠ©å‡½æ•°
 int findGoodsIdByName(const string& dishName) {
     for (int i = 0; i < goodsCount; ++i) {
         if (goods[i].name == dishName) {
@@ -806,21 +806,21 @@ int findGoodsIdByName(const string& dishName) {
     return -1;
 }
 
-// 2.  ×ö²Ë   ³øÊ¦¸Ä±ä²ËÆ·×´Ì¬
+// 2.  åšèœ   å¨å¸ˆæ”¹å˜èœå“çŠ¶æ€
 void changeDishStatusByChef() {
     bool found = false;
     bool done = false;
     while (!done) {
-        // ´ò¿ª¶©µ¥ÎÄ¼şºÍÁÙÊ±ÎÄ¼ş
+        // æ‰“å¼€è®¢å•æ–‡ä»¶å’Œä¸´æ—¶æ–‡ä»¶
         ifstream orderFile("orders.txt");
         ofstream tempFile("temp_orders.txt");
         try {
-            // ¼ì²éÎÄ¼şÊÇ·ñ³É¹¦´ò¿ª
+            // æ£€æŸ¥æ–‡ä»¶æ˜¯å¦æˆåŠŸæ‰“å¼€
             if (!orderFile.is_open() ||!tempFile.is_open()) {
-                throw ios_base::failure("ÎŞ·¨´ò¿ªÎÄ¼ş");
+                throw ios_base::failure("æ— æ³•æ‰“å¼€æ–‡ä»¶");
             }
             string line;
-            cout << "ÒÔÏÂÊÇ´ı×öµÄ²ËÆ·£º" << endl;
+            cout << "ä»¥ä¸‹æ˜¯å¾…åšçš„èœå“ï¼š" << endl;
             while (getline(orderFile, line)) {
                 istringstream iss(line);
                 int tableNumber;
@@ -830,13 +830,13 @@ void changeDishStatusByChef() {
                 double dishPrice;
                 iss >> tableNumber >> dishName >> quantity >> dishStatus >> dishPrice;
                 if (dishStatus == 0 ) {
-                    cout << "×ÀºÅ£º" << tableNumber << " ²ËÆ·£º" << dishName << " ÊıÁ¿£º" << quantity << " µ¥¼Û£º" << dishPrice << endl;
-                    cout << "ÊäÈë 'Y' È·ÈÏÍê³É²Ë£¬ÆäËû¼üÌø¹ı£º";
+                    cout << "æ¡Œå·ï¼š" << tableNumber << " èœå“ï¼š" << dishName << " æ•°é‡ï¼š" << quantity << " å•ä»·ï¼š" << dishPrice << endl;
+                    cout << "è¾“å…¥ 'Y' ç¡®è®¤å®Œæˆèœï¼Œå…¶ä»–é”®è·³è¿‡ï¼š";
                     string choice;
                     cin >> choice;
-                    // ÑéÖ¤ÓÃ»§ÊäÈë
+                    // éªŒè¯ç”¨æˆ·è¾“å…¥
                     if (choice == "Y" || choice == "y") {
-                        dishStatus = 1; //×´Ì¬¸ÄÎª1 
+                        dishStatus = 1; //çŠ¶æ€æ”¹ä¸º1 
                         found = true;
                     }
                 }
@@ -845,96 +845,96 @@ void changeDishStatusByChef() {
             orderFile.close();
             tempFile.close();
             if (found) {
-                // É¾³ıÔ­ÎÄ¼ş²¢½«ÁÙÊ±ÎÄ¼şÖØÃüÃûÎªÔ­ÎÄ¼ş
+                // åˆ é™¤åŸæ–‡ä»¶å¹¶å°†ä¸´æ—¶æ–‡ä»¶é‡å‘½åä¸ºåŸæ–‡ä»¶
                 if (remove("orders.txt")!= 0) {
-                    cerr << "É¾³ıÔ­ÎÄ¼şÊ§°Ü" << endl;
+                    cerr << "åˆ é™¤åŸæ–‡ä»¶å¤±è´¥" << endl;
                 }
                 if (rename("temp_orders.txt", "orders.txt")!= 0) {
-                    cerr << "ÖØÃüÃûÎÄ¼şÊ§°Ü" << endl;
+                    cerr << "é‡å‘½åæ–‡ä»¶å¤±è´¥" << endl;
                 }
-                cout << "³ö²ËĞÅÏ¢ÒÑ¸üĞÂ¡£" << endl;
+                cout << "å‡ºèœä¿¡æ¯å·²æ›´æ–°ã€‚" << endl;
             } else {
-                // É¾³ıÁÙÊ±ÎÄ¼ş
+                // åˆ é™¤ä¸´æ—¶æ–‡ä»¶
                 if (remove("temp_orders.txt")!= 0) {
-                    cerr << "É¾³ıÁÙÊ±ÎÄ¼şÊ§°Ü" << endl;
+                    cerr << "åˆ é™¤ä¸´æ—¶æ–‡ä»¶å¤±è´¥" << endl;
                 }
-                cout << "Ã»ÓĞ³ö²Ë²Ù×÷¡£" << endl;
+                cout << "æ²¡æœ‰å‡ºèœæ“ä½œã€‚" << endl;
             }
         } catch (const ios_base::failure& e) {
-            cerr << "ÎÄ¼ş²Ù×÷ÖĞ·¢Éú´íÎó: " << e.what() << endl;
+            cerr << "æ–‡ä»¶æ“ä½œä¸­å‘ç”Ÿé”™è¯¯: " << e.what() << endl;
         } catch (const exception& e) {
-            cerr << "ÆäËûÒì³£: " << e.what() << endl;
+            cerr << "å…¶ä»–å¼‚å¸¸: " << e.what() << endl;
         }
-        cout << "ÊäÈë¡°·µ»Ø¡±ÒÔ·µ»Ø£¬ÊäÈëÆäËû¼ü¼ÌĞø³ö²Ë²Ù×÷" << endl;
+        cout << "è¾“å…¥â€œè¿”å›â€ä»¥è¿”å›ï¼Œè¾“å…¥å…¶ä»–é”®ç»§ç»­å‡ºèœæ“ä½œ" << endl;
         string back;
         cin >> back;
-        if (back == "·µ»Ø") {
-        	chefMenu(); //·µ»Ø³øÊ¦½çÃæ 
+        if (back == "è¿”å›") {
+        	chefMenu(); //è¿”å›å¨å¸ˆç•Œé¢ 
             done = true;
         }
     }
 }
 
-//3.³øÊ¦²é¿´Í³¼Æ
+//3.å¨å¸ˆæŸ¥çœ‹ç»Ÿè®¡
 void chefViewStatistics() {
     ifstream orderFile("orders.txt");
     if (orderFile.is_open()) {
         string line;
-        cout << "µ±ÌìÒÑÍê³ÉµÄ²ËÆ·Í³¼Æ£º" << endl;
-        cout << "   ²ËÆ·Ãû³Æ      ÊıÁ¿     ×´Ì¬" << endl;
-        while (getline(orderFile, line)) { //ÒÔĞĞ¶ÁÈ¡ 
+        cout << "å½“å¤©å·²å®Œæˆçš„èœå“ç»Ÿè®¡ï¼š" << endl;
+        cout << "   èœå“åç§°      æ•°é‡     çŠ¶æ€" << endl;
+        while (getline(orderFile, line)) { //ä»¥è¡Œè¯»å– 
             istringstream iss(line);
             int tableNumber;
             string dishName;
             int quantity;
             int dishStatus;
-            double dishPrice;//½âÎöÊı¾İ 
+            double dishPrice;//è§£ææ•°æ® 
             iss >> tableNumber >> dishName >> quantity >> dishStatus >> dishPrice;
             if (dishStatus !=0) {
                 cout <<setw(8)<< dishName << setw(12) << quantity << setw(12) ;
-                if(dishStatus==0)cout<<"´ıÖÆ×÷"<<endl;
-                else if(dishStatus==1)cout<<"ÒÑÖÆ×÷"<<endl;
-                else if(dishStatus==3)cout<<"ÒÑ½áÕË"<<endl;
+                if(dishStatus==0)cout<<"å¾…åˆ¶ä½œ"<<endl;
+                else if(dishStatus==1)cout<<"å·²åˆ¶ä½œ"<<endl;
+                else if(dishStatus==3)cout<<"å·²ç»“è´¦"<<endl;
                 
             }
         }
         orderFile.close();
     } else {
-        cout << "ÎŞ·¨´ò¿ª¶©µ¥ÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€è®¢å•æ–‡ä»¶" << endl;
     }
 
-    cout << "ÊäÈë¡°·µ»Ø¡±ÒÔ·µ»Ø" << endl;
+    cout << "è¾“å…¥â€œè¿”å›â€ä»¥è¿”å›" << endl;
     string back;
     cin >> back;
-    if (back == "·µ»Ø") {
-        chefMenu(); //·µ»Ø³øÊ¦²Ëµ¥ 
+    if (back == "è¿”å›") {
+        chefMenu(); //è¿”å›å¨å¸ˆèœå• 
     } else {
         chefViewStatistics();
     }
 }
 
-/////////·şÎñÔ±
-//·şÎñÔ±×ÓÏµÍ³²Ëµ¥ 
+/////////æœåŠ¡å‘˜
+//æœåŠ¡å‘˜å­ç³»ç»Ÿèœå• 
 void serverSubsytemMenu(){
 	system("cls");
 	cout << "***************************************************" << endl;
-    cout << "           »¶Ó­½øÈëÏµ·şÎñÔ±×ÓÏµÍ³ÏµÍ³              " << endl;
+    cout << "           æ¬¢è¿è¿›å…¥ç³»æœåŠ¡å‘˜å­ç³»ç»Ÿç³»ç»Ÿ              " << endl;
     cout << "***************************************************" << endl;
-    cout << "*               1.Îª¹Ë¿Íµã²Ë                      *" << endl;
+    cout << "*               1.ä¸ºé¡¾å®¢ç‚¹èœ                      *" << endl;
     cout << "*                                                 *" << endl;
-    cout << "*               2.Îª¹Ë¿Í¼Ó²Ë                      *" << endl;
+    cout << "*               2.ä¸ºé¡¾å®¢åŠ èœ                      *" << endl;
     cout << "*                                                 *" << endl;
-    cout << "*               3.³ö²Ë                            *" << endl;
+    cout << "*               3.å‡ºèœ                            *" << endl;
     cout << "*                                                 *" << endl;
-    cout << "*               4.²é¿´ÒÑ³ö²ËÇåµ¥                  *" << endl;
+    cout << "*               4.æŸ¥çœ‹å·²å‡ºèœæ¸…å•                  *" << endl;
     cout << "*                                                 *" << endl;
-    cout << "*               5.²é¿´Î´³ö²ËÇåµ¥                  *" << endl;
+    cout << "*               5.æŸ¥çœ‹æœªå‡ºèœæ¸…å•                  *" << endl;
     cout << "*                                                 *" << endl;
-    cout << "*               6.´òÓ¡Ğ¡Æ±                        *" << endl;
+    cout << "*               6.æ‰“å°å°ç¥¨                        *" << endl;
     cout << "*                                                 *" << endl;
-    cout << "*               7.²é¿´²Í×ÀĞÅÏ¢                    *" << endl;
+    cout << "*               7.æŸ¥çœ‹é¤æ¡Œä¿¡æ¯                    *" << endl;
     cout << "*                                                 *" << endl;
-    cout << "*               0.ÍË³öµ½Ö÷²Ëµ¥                    *" << endl;
+    cout << "*               0.é€€å‡ºåˆ°ä¸»èœå•                    *" << endl;
     cout << "***************************************************" << endl;
 	int select;
 	while(1){
@@ -942,22 +942,22 @@ void serverSubsytemMenu(){
 		switch(select)
 		{
 			case 1:
-				takeOrder(); //Îª¹Ë¿Íµã²Ë 
+				takeOrder(); //ä¸ºé¡¾å®¢ç‚¹èœ 
 				break;
 			case 2:
-				addDishes(); //¼Ó²Ë 
+				addDishes(); //åŠ èœ 
 				break;
 			case 3:
-				dishOut(); //³ö²Ë 
+				dishOut(); //å‡ºèœ 
 				break;
 			case 4:
-				view_yichucai(); //²é¿´ÒÑ³ö²Ë 
+				view_yichucai(); //æŸ¥çœ‹å·²å‡ºèœ 
 				break;
 			case 5:
-				view_weichucai();//²é¿´Î´³ö²Ë 
+				view_weichucai();//æŸ¥çœ‹æœªå‡ºèœ 
 				break;
 			case 6:
-				printTableReceipt(); //·şÎñÔ±´òÓ¡Ğ¡Æ± 
+				printTableReceipt(); //æœåŠ¡å‘˜æ‰“å°å°ç¥¨ 
 				break;
 			case 7:
 				viewTables(); 
@@ -966,7 +966,7 @@ void serverSubsytemMenu(){
 				 mainmenu();
 				 break;
 			default:
-                cout << "ÊäÈëµÄÑ¡ÏîÎŞĞ§£¬ÇëÖØĞÂÊäÈë£¡" <<endl;
+                cout << "è¾“å…¥çš„é€‰é¡¹æ— æ•ˆï¼Œè¯·é‡æ–°è¾“å…¥ï¼" <<endl;
                 continue;
 		}
 	}
@@ -974,26 +974,26 @@ void serverSubsytemMenu(){
 }
 
 
-///2.¼Ó²Ëº¯Êı
+///2.åŠ èœå‡½æ•°
 void addDishes() {
     int tableNumber;
-    cout << "ÇëÊäÈëÒª¼Ó²ËµÄ×ÀºÅ£º" << endl;
+    cout << "è¯·è¾“å…¥è¦åŠ èœçš„æ¡Œå·ï¼š" << endl;
     cin >> tableNumber;
-    // ÏÔÊ¾¸Ã×ÀÒÑµãµÄ²ËÆ·
-    showOrderedDishes(tableNumber); //Õ¹Ê¾¸Ã×ÀÒÑµã²ËÆ· 
-    // ÏÔÊ¾²ËÆ·ĞÅÏ¢
+    // æ˜¾ç¤ºè¯¥æ¡Œå·²ç‚¹çš„èœå“
+    showOrderedDishes(tableNumber); //å±•ç¤ºè¯¥æ¡Œå·²ç‚¹èœå“ 
+    // æ˜¾ç¤ºèœå“ä¿¡æ¯
     displayDishes();
     ofstream orderFile("orders.txt", ios::app);
     if (!orderFile.is_open()) {
-        cout << "ÎŞ·¨´ò¿ªÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€æ–‡ä»¶" << endl;
         return;
     }
-    cout << "ÇëÊäÈëÒª¼ÓµÄ²ËÆ·ĞÅÏ¢£¨ÊäÈë¸ñÊ½£º²ËÆ·Ãû³Æ ²ËÆ·ÊıÁ¿£¬ÊäÈë ¡°Íê³É¡± ½áÊø£©" << endl;
+    cout << "è¯·è¾“å…¥è¦åŠ çš„èœå“ä¿¡æ¯ï¼ˆè¾“å…¥æ ¼å¼ï¼šèœå“åç§° èœå“æ•°é‡ï¼Œè¾“å…¥ â€œå®Œæˆâ€ ç»“æŸï¼‰" << endl;
     string dishName;
     int quantity;
     while (true) {
         cin >> dishName;
-        if (dishName == "Íê³É") {
+        if (dishName == "å®Œæˆ") {
         	exit(0); 
             break;
         }
@@ -1008,75 +1008,75 @@ void addDishes() {
             }
         }
         if (!found) {
-            cout << "²ËÆ·²»´æÔÚ£¬ÇëÖØĞÂÊäÈë£¡" << endl;
+            cout << "èœå“ä¸å­˜åœ¨ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
             continue;
         }
         orderFile << tableNumber << " " << dishName << " " << quantity << " 0 " << price << endl;
-        cout << "¼Ó²Ë³É¹¦£¡" << endl;
+        cout << "åŠ èœæˆåŠŸï¼" << endl;
     }
     orderFile.close();
 }
-//3.³ö²Ëº¯Êı ³ö²ËºóÍË³ö³ÌĞò 
+//3.å‡ºèœå‡½æ•° å‡ºèœåé€€å‡ºç¨‹åº 
 void dishOut() {
-    // ´ò¿ª¶©µ¥ÎÄ¼şºÍÁÙÊ±ÎÄ¼ş
+    // æ‰“å¼€è®¢å•æ–‡ä»¶å’Œä¸´æ—¶æ–‡ä»¶
     ifstream orderFile("orders.txt");
     ofstream tempFile("temp_orders.txt");
     string line;
     bool found = false;
-    cout << "ÒÔÏÂÊÇ´ı³ö²ËµÄ²ËÆ·£º" << endl;
-    // ÖğĞĞ¶ÁÈ¡¶©µ¥ÎÄ¼ş
+    cout << "ä»¥ä¸‹æ˜¯å¾…å‡ºèœçš„èœå“ï¼š" << endl;
+    // é€è¡Œè¯»å–è®¢å•æ–‡ä»¶
     while (getline(orderFile, line)) {
         istringstream iss(line);
         int tableNumber;
         string dishName;
         int quantity;
         int dishStatus;
-        double dishPrice; // ĞÂÔöµ¥¼Û±äÁ¿
-        // ´ÓĞĞÖĞ½âÎö×ÀºÅ¡¢²ËÆ·Ãû³Æ¡¢ÊıÁ¿¡¢×´Ì¬ºÍµ¥¼Û
+        double dishPrice; // æ–°å¢å•ä»·å˜é‡
+        // ä»è¡Œä¸­è§£ææ¡Œå·ã€èœå“åç§°ã€æ•°é‡ã€çŠ¶æ€å’Œå•ä»·
         iss >> tableNumber >> dishName >> quantity >> dishStatus >> dishPrice;
-        // Èô²ËÆ·×´Ì¬ÎªÎ´×¼±¸»ò×¼±¸ÖĞ
+        // è‹¥èœå“çŠ¶æ€ä¸ºæœªå‡†å¤‡æˆ–å‡†å¤‡ä¸­
         if ( dishStatus == 1) {
-            cout << "×ÀºÅ£º" << tableNumber << " ²ËÆ·£º" << dishName << " ÊıÁ¿£º" << quantity << " µ¥¼Û£º" << dishPrice << endl;
-            cout << "ÊäÈë 'Y' È·ÈÏ³ö²Ë£¬ÆäËû¼üÌø¹ı£º";
+            cout << "æ¡Œå·ï¼š" << tableNumber << " èœå“ï¼š" << dishName << " æ•°é‡ï¼š" << quantity << " å•ä»·ï¼š" << dishPrice << endl;
+            cout << "è¾“å…¥ 'Y' ç¡®è®¤å‡ºèœï¼Œå…¶ä»–é”®è·³è¿‡ï¼š";
             string choice;
             cin >> choice;
             if (choice == "Y" || choice == "y") {
-                dishStatus = 2;  // ½«×´Ì¬¸üĞÂÎªÒÑÍê³É
+                dishStatus = 2;  // å°†çŠ¶æ€æ›´æ–°ä¸ºå·²å®Œæˆ
                 found = true;
             }
         }
-        // ½«¸üĞÂºóµÄĞÅÏ¢Ğ´ÈëÁÙÊ±ÎÄ¼ş ×ÀºÅ Ãû³Æ ÊıÁ¿ ×´Ì¬ µ¥¼Û
+        // å°†æ›´æ–°åçš„ä¿¡æ¯å†™å…¥ä¸´æ—¶æ–‡ä»¶ æ¡Œå· åç§° æ•°é‡ çŠ¶æ€ å•ä»·
         tempFile << tableNumber << " " << dishName << " " << quantity << " " << dishStatus << " " << dishPrice << endl;
     }
     orderFile.close();
     tempFile.close();
-    // ÈôÓĞ³ö²Ë²Ù×÷£¬É¾³ıÔ­¶©µ¥ÎÄ¼ş²¢½«ÁÙÊ±ÎÄ¼şÖØÃüÃûÎª¶©µ¥ÎÄ¼ş
+    // è‹¥æœ‰å‡ºèœæ“ä½œï¼Œåˆ é™¤åŸè®¢å•æ–‡ä»¶å¹¶å°†ä¸´æ—¶æ–‡ä»¶é‡å‘½åä¸ºè®¢å•æ–‡ä»¶
     if (found) {
-        remove("orders.txt");//É¾³ıÔ­À´µÄÎÄ¼ş 
-        rename("temp_orders.txt", "orders.txt"); //ÃüÃûĞÂµÄÎÄ¼ş 
-        cout << "³ö²ËĞÅÏ¢ÒÑ¸üĞÂ¡£" << endl;
+        remove("orders.txt");//åˆ é™¤åŸæ¥çš„æ–‡ä»¶ 
+        rename("temp_orders.txt", "orders.txt"); //å‘½åæ–°çš„æ–‡ä»¶ 
+        cout << "å‡ºèœä¿¡æ¯å·²æ›´æ–°ã€‚" << endl;
     } else {
         remove("temp_orders.txt");
-        cout << "Ã»ÓĞ³ö²Ë²Ù×÷¡£" << endl;
+        cout << "æ²¡æœ‰å‡ºèœæ“ä½œã€‚" << endl;
     }
     exit(0);
 }
 
-//4.¿´ÒÑ³ö²ËÇåµ¥
+//4.çœ‹å·²å‡ºèœæ¸…å•
 void view_yichucai() {
     ifstream orderFile("orders.txt");
     bool found = false;
     string line;
-    cout << "ÒÑ³ö²ËÇåµ¥£º" << endl;
-    cout << "×ÀºÅ       ²ËÆ·Ãû³Æ       ÊıÁ¿         µ¥¼Û" << endl;
+    cout << "å·²å‡ºèœæ¸…å•ï¼š" << endl;
+    cout << "æ¡Œå·       èœå“åç§°       æ•°é‡         å•ä»·" << endl;
     while (getline(orderFile, line)) {
         istringstream iss(line);
         int tableNumber;
         string dishName;
         int quantity;
         int dishStatus;
-        double dishPrice; // ĞÂÔö±äÁ¿ÓÃÓÚ´æ´¢µ¥¼Û
-        iss >> tableNumber >> dishName >> quantity >> dishStatus >> dishPrice; // ¶ÁÈ¡µ¥¼ÛĞÅÏ¢
+        double dishPrice; // æ–°å¢å˜é‡ç”¨äºå­˜å‚¨å•ä»·
+        iss >> tableNumber >> dishName >> quantity >> dishStatus >> dishPrice; // è¯»å–å•ä»·ä¿¡æ¯
         if (dishStatus == 2||dishStatus == 3) {
             found = true;
             cout << tableNumber << setw(16) << dishName << setw(10) << quantity << setw(11) << dishPrice << endl;
@@ -1084,33 +1084,33 @@ void view_yichucai() {
     }
     orderFile.close();
     if (!found) {
-        cout << "Ã»ÓĞÒÑ³ö²ËµÄ²ËÆ·¡£" << endl;
+        cout << "æ²¡æœ‰å·²å‡ºèœçš„èœå“ã€‚" << endl;
     }
-    cout << "ÊäÈë¡°·µ»Ø¡±ÒÔ·µ»Ø·şÎñÔ±½çÃæ" << endl;
+    cout << "è¾“å…¥â€œè¿”å›â€ä»¥è¿”å›æœåŠ¡å‘˜ç•Œé¢" << endl;
     string back;
     cin >> back;
-    if (back == "·µ»Ø") {
-        serverSubsytemMenu(); //·µ»Ø·şÎñÔ±½çÃæ 
+    if (back == "è¿”å›") {
+        serverSubsytemMenu(); //è¿”å›æœåŠ¡å‘˜ç•Œé¢ 
     } else {
         view_yichucai();
     }
 }
 
-//5.²é¿´Î´³ö²ËÇåµ¥
+//5.æŸ¥çœ‹æœªå‡ºèœæ¸…å•
 void view_weichucai() {
     ifstream orderFile("orders.txt");
     bool found = false;
     string line;
-    cout << "Î´³ö²ËÇåµ¥£º" << endl;
-    cout << "×ÀºÅ       ²ËÆ·Ãû³Æ        ÊıÁ¿       µ¥¼Û" << endl;
+    cout << "æœªå‡ºèœæ¸…å•ï¼š" << endl;
+    cout << "æ¡Œå·       èœå“åç§°        æ•°é‡       å•ä»·" << endl;
     while (getline(orderFile, line)) {
         istringstream iss(line);
         int tableNumber;
         string dishName;
         int quantity;
         int dishStatus;
-        double dishPrice; // ĞÂÔö±äÁ¿ÓÃÓÚ´æ´¢µ¥¼Û
-        iss >> tableNumber >> dishName >> quantity >> dishStatus >> dishPrice; // ½âÎö 
+        double dishPrice; // æ–°å¢å˜é‡ç”¨äºå­˜å‚¨å•ä»·
+        iss >> tableNumber >> dishName >> quantity >> dishStatus >> dishPrice; // è§£æ 
         if (dishStatus == 0 || dishStatus == 1) {
             found = true;
             cout << tableNumber << setw(16) << dishName << setw(10) << quantity << setw(12) << dishPrice << endl;
@@ -1118,36 +1118,36 @@ void view_weichucai() {
     }
     orderFile.close();
     if (!found) {
-        cout << "Ã»ÓĞÎ´³ö²ËµÄ²ËÆ·¡£" << endl;
+        cout << "æ²¡æœ‰æœªå‡ºèœçš„èœå“ã€‚" << endl;
     }
-    cout << "ÊäÈë¡°·µ»Ø¡±ÒÔ·µ»Ø·şÎñÔ±½çÃæ" << endl;
+    cout << "è¾“å…¥â€œè¿”å›â€ä»¥è¿”å›æœåŠ¡å‘˜ç•Œé¢" << endl;
     string back;
     cin >> back;
-    if (back == "·µ»Ø") {
-        serverSubsytemMenu(); //·µ»Ø·şÎñÔ±½çÃæ 
+    if (back == "è¿”å›") {
+        serverSubsytemMenu(); //è¿”å›æœåŠ¡å‘˜ç•Œé¢ 
     } else {
         view_weichucai();
     }
 }
 
-//6.·şÎñÔ±´òÓ¡Ğ¡Æ±
+//6.æœåŠ¡å‘˜æ‰“å°å°ç¥¨
 void printTableReceipt() {
     int tableNumber;
-    cout << "ÇëÊäÈëÒª´òÓ¡Ğ¡Æ±µÄ×ÀºÅ£º" << endl;
+    cout << "è¯·è¾“å…¥è¦æ‰“å°å°ç¥¨çš„æ¡Œå·ï¼š" << endl;
     cin >> tableNumber;
 
 
     ifstream orderFile("orders.txt");
     if (!orderFile.is_open()) {
-        cout << "ÎŞ·¨´ò¿ª¶©µ¥ÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€è®¢å•æ–‡ä»¶" << endl;
         return;
     }
 
 
     bool found = false;
-    cout << "--------------------------- Ğ¡Æ±ĞÅÏ¢ ---------------------------" << endl;
-    cout << "×ÀºÅ£º" << tableNumber << endl;
-    cout << "     ²ËÆ·Ãû³Æ       ²ËÆ·¼Û¸ñ       ÊıÁ¿" << endl;
+    cout << "--------------------------- å°ç¥¨ä¿¡æ¯ ---------------------------" << endl;
+    cout << "æ¡Œå·ï¼š" << tableNumber << endl;
+    cout << "     èœå“åç§°       èœå“ä»·æ ¼       æ•°é‡" << endl;
     string line;
     while (getline(orderFile, line)) {
         istringstream iss(line);
@@ -1167,64 +1167,64 @@ void printTableReceipt() {
 
 
     if (!found) {
-        cout << "Î´ÕÒµ½¸Ã×ÀºÅµÄ¶©µ¥ĞÅÏ¢" << endl;
+        cout << "æœªæ‰¾åˆ°è¯¥æ¡Œå·çš„è®¢å•ä¿¡æ¯" << endl;
     }
-    cout << "--------------------------- ½áÊø --------------------------------" << endl;
+    cout << "--------------------------- ç»“æŸ --------------------------------" << endl;
     exit(0); 
 }
 
 
-///////////////ÊÕÒøÔ± 
-// ÊÕÒøÔ±²Ëµ¥
+///////////////æ”¶é“¶å‘˜ 
+// æ”¶é“¶å‘˜èœå•
 void cashierMenu() {
     int choice;
     while (true) {
         cout << "***************************************************" << endl;
-        cout << "                 ÊÕÒøÔ±¹¦ÄÜ²Ëµ¥                " << endl;
+        cout << "                 æ”¶é“¶å‘˜åŠŸèƒ½èœå•                " << endl;
         cout << "***************************************************" << endl;
-        cout << "*        1.½áËãÊÕ·Ñ        2.Í³¼Æ                 *" << endl;
+        cout << "*        1.ç»“ç®—æ”¶è´¹        2.ç»Ÿè®¡                 *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*        3.²é¿´Í³¼Æ        4.ÍË³ö                 *" << endl;
+        cout << "*        3.æŸ¥çœ‹ç»Ÿè®¡        4.é€€å‡º                 *" << endl;
         cout << "*                                                 *" << endl;
         cout << "***************************************************" << endl;
         cin >> choice;
         switch (choice) {
         case 1:
-            cashierSettlement(); //ÊÕÒøÔ±½áÕË 
+            cashierSettlement(); //æ”¶é“¶å‘˜ç»“è´¦ 
             break;
         case 2:
-            cashierViewStatistics(); //ÊÕÒøÔ±Í³¼Æ 
+            cashierViewStatistics(); //æ”¶é“¶å‘˜ç»Ÿè®¡ 
             break;
         case 3:
-            cashierViewStatistics();  //²é¿´Í³¼Æ 
+            cashierViewStatistics();  //æŸ¥çœ‹ç»Ÿè®¡ 
             break;
         case 4: 
             exit(0);
             break;
         default:
-            cout << "ÎŞĞ§µÄÑ¡Ôñ£¬ÇëÖØĞÂÊäÈë£¡" << endl;
+            cout << "æ— æ•ˆçš„é€‰æ‹©ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
             continue;
         }
         break;
     }
 }
 
-///1.ÊÕÒøÔ±½áËãÊÕ·Ñ
+///1.æ”¶é“¶å‘˜ç»“ç®—æ”¶è´¹
 void cashierSettlement() {
     int tableNumber;
-    cout << "ÇëÊäÈë×ÀºÅ£º" << endl;
+    cout << "è¯·è¾“å…¥æ¡Œå·ï¼š" << endl;
     cin >> tableNumber;
 
-    // ´æ´¢ÒÑÍê³É²ËÆ·µÄĞÅÏ¢
+    // å­˜å‚¨å·²å®Œæˆèœå“çš„ä¿¡æ¯
     int completedDishCount = 0;
     string completedDishNames[MAX_DISHES];
     int completedDishQuantities[MAX_DISHES];
-    double mo = 0; // ×Ü½ğ¶î
+    double mo = 0; // æ€»é‡‘é¢
 
-    // ´Ó orders ÖĞÕÒ³ö¸Ã×ÀºÅµÄÒÑÍê³É²ËÆ·
+    // ä» orders ä¸­æ‰¾å‡ºè¯¥æ¡Œå·çš„å·²å®Œæˆèœå“
     ifstream orderFile("orders.txt");
     if (!orderFile.is_open()) {
-        cout << "ÎŞ·¨´ò¿ª¶©µ¥ÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€è®¢å•æ–‡ä»¶" << endl;
         return;
     }
 
@@ -1236,7 +1236,7 @@ void cashierSettlement() {
         int quantity;
         int dishStatus;
         double dishPrice;
-        // ¼ÙÉè orders.txt ÖĞĞÅÏ¢¸ñÊ½Îª ×ÀºÅ ²ËÆ·Ãû³Æ ÊıÁ¿ ²ËÆ·×´Ì¬ µ¥¼Û
+        // å‡è®¾ orders.txt ä¸­ä¿¡æ¯æ ¼å¼ä¸º æ¡Œå· èœå“åç§° æ•°é‡ èœå“çŠ¶æ€ å•ä»·
         if (iss >> storedTableNumber >> dishName >> quantity >> dishStatus >> dishPrice) {
             if (storedTableNumber == tableNumber && dishStatus == 2) {
                 completedDishNames[completedDishCount] = dishName;
@@ -1244,11 +1244,11 @@ void cashierSettlement() {
                 mo += dishPrice * quantity;
                 completedDishCount++;
 
-                // ´æ´¢µ½ sale ½á¹¹ÌåÖĞ
+                // å­˜å‚¨åˆ° sale ç»“æ„ä½“ä¸­
                 sale[saleCount].salenumber[completedDishCount - 1] = completedDishCount;
-                // ²éÕÒÉÌÆ· ID
+                // æŸ¥æ‰¾å•†å“ ID
                 sale[saleCount].goodsid[completedDishCount - 1] = findGoodsIdByName(dishName);
-                // Ê¹ÓÃ strncpy ¸´ÖÆ×Ö·û´®µ½ char Êı×é
+                // ä½¿ç”¨ strncpy å¤åˆ¶å­—ç¬¦ä¸²åˆ° char æ•°ç»„
                 strncpy(sale[saleCount].salename[completedDishCount - 1], dishName.c_str(), sizeof(sale[saleCount].salename[completedDishCount - 1]) - 1);
                 sale[saleCount].salename[completedDishCount - 1][sizeof(sale[saleCount].salename[completedDishCount - 1]) - 1] = '\0';
                 sale[saleCount].saledanjia[completedDishCount - 1] = dishPrice;
@@ -1257,22 +1257,22 @@ void cashierSettlement() {
     }
     orderFile.close();
 
-    // ´¢´æÏúÊÛµ¥¾İºÅ
-    sale[saleCount].danju = saleCount + 1; // µ¥¾İºÅ×ÔÔö
+    // å‚¨å­˜é”€å”®å•æ®å·
+    sale[saleCount].danju = saleCount + 1; // å•æ®å·è‡ªå¢
     sale[saleCount].allmoney = mo;
     sale[saleCount].salenumberCount = completedDishCount;
 
-    // ´òÓ¡Ğ¡Æ±
+    // æ‰“å°å°ç¥¨
     system("cls");
     cout << " " << endl;
-    cout << "     »¶Ó­¹âÁÙ666²ÍÌü£¡" << endl;
-    system("color 70"); //¸ü¸Äµ×É« 
+    cout << "     æ¬¢è¿å…‰ä¸´666é¤å…ï¼" << endl;
+    system("color 70"); //æ›´æ”¹åº•è‰² 
     cout << "..................................." << endl;
-    cout << "      µ¥¾İºÅ£º" << saleSummaryCount << endl;
-    cout << "      ÈÕÆÚ£º";
+    cout << "      å•æ®å·ï¼š" << saleSummaryCount << endl;
+    cout << "      æ—¥æœŸï¼š";
     riqi();
     cout << "..................................." << endl;
-    cout << "  Ãû³Æ           Êı Á¿        µ¥¼Û       ×Ü½ğ¶î" << endl;
+    cout << "  åç§°           æ•° é‡        å•ä»·       æ€»é‡‘é¢" << endl;
     cout << " " << endl;
     for (int i = 0; i < completedDishCount; ++i) {
         cout << setw(10) << completedDishNames[i];
@@ -1283,26 +1283,26 @@ void cashierSettlement() {
     cout << setw(36) << fixed << setprecision(2) << mo;
     cout << endl;
     cout << "..................................." << endl;
-    cout << "      Ğ»Ğ»»İ¹Ë£¡»¶Ó­ÏÂ´Î¹âÁÙ£¡" << endl;
+    cout << "      è°¢è°¢æƒ é¡¾ï¼æ¬¢è¿ä¸‹æ¬¡å…‰ä¸´ï¼" << endl;
 
-    // ±£´æÏúÊÛÃ÷Ï¸µ½ÎÄ¼ş
-    ofstream saleFile("sales_detail.txt", ios::app); // Ğ¡Æ±Ã÷Ï¸ÎÄ¼ş
-    ofstream summaryFile("sales_summary.txt", ios::app); // Ğ¡Æ±¸ÅÒªÎÄ¼ş
+    // ä¿å­˜é”€å”®æ˜ç»†åˆ°æ–‡ä»¶
+    ofstream saleFile("sales_detail.txt", ios::app); // å°ç¥¨æ˜ç»†æ–‡ä»¶
+    ofstream summaryFile("sales_summary.txt", ios::app); // å°ç¥¨æ¦‚è¦æ–‡ä»¶
     if (saleFile.is_open() && summaryFile.is_open()) {
-        // ±£´æĞ¡Æ±¸ÅÒªĞÅÏ¢
+        // ä¿å­˜å°ç¥¨æ¦‚è¦ä¿¡æ¯
         summaryFile << saleSummaryCount << " " << mo << endl;
 
-        // ±£´æĞ¡Æ±Ã÷Ï¸ĞÅÏ¢
+        // ä¿å­˜å°ç¥¨æ˜ç»†ä¿¡æ¯
         for (int i = 0; i < completedDishCount; ++i) {
             saleFile << saleSummaryCount << " " << sale[saleCount].salename[i] << " " << sale[saleCount].saledanjia[i] << " " << completedDishQuantities[i] << endl;
         }
         saleFile.close();
         summaryFile.close();
     } else {
-        cout << "ÎŞ·¨´ò¿ªÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€æ–‡ä»¶" << endl;
     }
 
-    // ¸üĞÂ¶©µ¥×´Ì¬
+    // æ›´æ–°è®¢å•çŠ¶æ€
     ifstream orderFile2("orders.txt");
     ofstream tempFile("temp_orders.txt");
     if (orderFile2.is_open() && tempFile.is_open()) {
@@ -1315,7 +1315,7 @@ void cashierSettlement() {
             double dishPrice;
             if (iss >> storedTableNumber >> dishName >> quantity >> dishStatus >> dishPrice) {
                 if (storedTableNumber == tableNumber) {
-                    dishStatus = 3; // ½«¸Ã×ÀºÅµÄ¶©µ¥×´Ì¬¸ÄÎª 3£¨ÒÑ½áÕË£©
+                    dishStatus = 3; // å°†è¯¥æ¡Œå·çš„è®¢å•çŠ¶æ€æ”¹ä¸º 3ï¼ˆå·²ç»“è´¦ï¼‰
                 }
                 tempFile << storedTableNumber << " " << dishName << " " << quantity << " " << dishStatus << " " << dishPrice << endl;
             }
@@ -1326,32 +1326,32 @@ void cashierSettlement() {
         rename("temp_orders.txt", "orders.txt");
     }
 
-    // ½«¶ÔÓ¦²Í×À×´Ì¬ÖÃÎª 0 ²¢½«Ê±¼äÖÃÎª "NULL" ÒÔ¼°½«ÓÃ»§Ãû¸ÄÎª "NULL"
+    // å°†å¯¹åº”é¤æ¡ŒçŠ¶æ€ç½®ä¸º 0 å¹¶å°†æ—¶é—´ç½®ä¸º "NULL" ä»¥åŠå°†ç”¨æˆ·åæ”¹ä¸º "NULL"
     bool foundTable = false;
     for (int i = 0; i < tableCount; ++i) {
         if (tables[i].number == tableNumber) {
-            tables[i].use = 0; // ½«²Í×À×´Ì¬ÖÃÎª 0£¨¿ÕÏĞ£©
-            tables[i].reservationTime = "ÎŞ"; // ½«Ê±¼äÖÃÎª "NULL"
-            tables[i].userName = "ÎŞ"; // ½«ÓÃ»§ÃûÖÃÎª "NULL"
+            tables[i].use = 0; // å°†é¤æ¡ŒçŠ¶æ€ç½®ä¸º 0ï¼ˆç©ºé—²ï¼‰
+            tables[i].reservationTime = "æ— "; // å°†æ—¶é—´ç½®ä¸º "NULL"
+            tables[i].userName = "æ— "; // å°†ç”¨æˆ·åç½®ä¸º "NULL"
             foundTable = true;
             break;
         }
     }
     saveTables();
     if (!foundTable) {
-        cout << "Î´ÕÒµ½¸Ã×ÀºÅ¶ÔÓ¦µÄ²Í×ÀĞÅÏ¢¡£" << endl;
+        cout << "æœªæ‰¾åˆ°è¯¥æ¡Œå·å¯¹åº”çš„é¤æ¡Œä¿¡æ¯ã€‚" << endl;
     }
 
-    // ´òÓ¡½áËãĞÅÏ¢
-    cout << "½áËãĞÅÏ¢£º" << endl;
-    cout << "ÒÑ×ö²ËÆ·ÖÖÀàÊıÁ¿£º" << completedDishCount << endl;
-    cout << "ÒÑ×ö²ËÆ·½ğ¶î£º" << mo << endl;
+    // æ‰“å°ç»“ç®—ä¿¡æ¯
+    cout << "ç»“ç®—ä¿¡æ¯ï¼š" << endl;
+    cout << "å·²åšèœå“ç§ç±»æ•°é‡ï¼š" << completedDishCount << endl;
+    cout << "å·²åšèœå“é‡‘é¢ï¼š" << mo << endl;
 
-    // ´òÓ¡ orders ÖĞ×´Ì¬Îª 1 µÄ²ËÆ·ĞÅÏ¢
+    // æ‰“å° orders ä¸­çŠ¶æ€ä¸º 1 çš„èœå“ä¿¡æ¯
     ifstream orderFile3("orders.txt");
     if (orderFile3.is_open()) {
-        cout << "¶©µ¥ÖĞ×´Ì¬Îª 0 or 1 µÄ²ËÆ·ĞÅÏ¢£º" << endl;
-        cout << "×ÀºÅ    ²ËÆ·Ãû³Æ    ÊıÁ¿    ×´Ì¬" << endl;
+        cout << "è®¢å•ä¸­çŠ¶æ€ä¸º 0 or 1 çš„èœå“ä¿¡æ¯ï¼š" << endl;
+        cout << "æ¡Œå·    èœå“åç§°    æ•°é‡    çŠ¶æ€" << endl;
         while (getline(orderFile3, line)) {
             istringstream iss(line);
             int storedTableNumber;
@@ -1362,17 +1362,17 @@ void cashierSettlement() {
             if (iss >> storedTableNumber >> dishName >> quantity >> dishStatus >> dishPrice) {
                 if (dishStatus == 1 || dishStatus == 0) {
                     cout << storedTableNumber << setw(12) << dishName << setw(8) << quantity << setw(8) ;
-					if(dishStatus==0)cout<<"Î´ÖÆ×÷" << endl;
-					if(dishStatus==1)cout<<"Î´ÉÏ²Ë" << endl;
+					if(dishStatus==0)cout<<"æœªåˆ¶ä½œ" << endl;
+					if(dishStatus==1)cout<<"æœªä¸Šèœ" << endl;
                 }
             }
         }
         orderFile3.close();
     } else {
-        cout << "ÎŞ·¨´ò¿ª¶©µ¥ÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€è®¢å•æ–‡ä»¶" << endl;
     }
 
-    cout << "ÊäÈëÊı×Ö¡°1¡±ÒÔ·µ»Ø" << endl;
+    cout << "è¾“å…¥æ•°å­—â€œ1â€ä»¥è¿”å›" << endl;
     string nm, mmmm = "1";
     while (true) {
         cin >> nm;
@@ -1380,25 +1380,25 @@ void cashierSettlement() {
             cashierMenu();
             break;
         } else {
-            cout << "ÇëÖØĞÂÊäÈë" << endl;
+            cout << "è¯·é‡æ–°è¾“å…¥" << endl;
         }
     }
     saleCount++;
 
-    // ±£´æ²Í×ÀĞÅÏ¢
+    // ä¿å­˜é¤æ¡Œä¿¡æ¯
     saveTables();
 }
 
-////2.ÊÕÒøÔ±Í³¼Æ£¨Î´Ê¹ÓÃ 
+////2.æ”¶é“¶å‘˜ç»Ÿè®¡ï¼ˆæœªä½¿ç”¨ 
 void cashierStatistics() {
-    int completedDishCount[MAX_DISHES] = {0}; // ´æ´¢Ã¿ÖÖÒÑÍê³É²ËÆ·µÄÊıÁ¿
-    double completedDishAmount[MAX_DISHES] = {0}; // ´æ´¢Ã¿ÖÖÒÑÍê³É²ËÆ·µÄ×Ü½ğ¶î
-    int pendingDishCount[MAX_DISHES] = {0}; // ´æ´¢Ã¿ÖÖ´ı×ö²ËÆ·µÄÊıÁ¿
-    double pendingDishAmount[MAX_DISHES] = {0}; // ´æ´¢Ã¿ÖÖ´ı×ö²ËÆ·µÄ×Ü½ğ¶î
-    // ´ò¿ª¶©µ¥ÎÄ¼ş
+    int completedDishCount[MAX_DISHES] = {0}; // å­˜å‚¨æ¯ç§å·²å®Œæˆèœå“çš„æ•°é‡
+    double completedDishAmount[MAX_DISHES] = {0}; // å­˜å‚¨æ¯ç§å·²å®Œæˆèœå“çš„æ€»é‡‘é¢
+    int pendingDishCount[MAX_DISHES] = {0}; // å­˜å‚¨æ¯ç§å¾…åšèœå“çš„æ•°é‡
+    double pendingDishAmount[MAX_DISHES] = {0}; // å­˜å‚¨æ¯ç§å¾…åšèœå“çš„æ€»é‡‘é¢
+    // æ‰“å¼€è®¢å•æ–‡ä»¶
     ifstream orderFile("orders.txt");
     if (!orderFile.is_open()) {
-        cout << "ÎŞ·¨´ò¿ª¶©µ¥ÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€è®¢å•æ–‡ä»¶" << endl;
         return;
     }
 
@@ -1410,7 +1410,7 @@ void cashierStatistics() {
         int quantity;
         int dishStatus;
         double dishPrice;
-        // ¼ÙÉè order.txt ÖĞĞÅÏ¢¸ñÊ½Îª ×ÀºÅ ²ËÆ·Ãû³Æ ÊıÁ¿ ²ËÆ·×´Ì¬ ²ËÆ·¼Û¸ñ
+        // å‡è®¾ order.txt ä¸­ä¿¡æ¯æ ¼å¼ä¸º æ¡Œå· èœå“åç§° æ•°é‡ èœå“çŠ¶æ€ èœå“ä»·æ ¼
         if (iss >> tableNumber >> dishName >> quantity >> dishStatus >> dishPrice) {
             bool found = false;
             for (int i = 0; i < dishCount; i++) {
@@ -1427,22 +1427,22 @@ void cashierStatistics() {
                 }
             }
             if (!found) {
-                // ¿ÉÌí¼Ó¸üÍêÉÆµÄ´íÎó´¦ÀíÂß¼­£¬ÕâÀïÔİÊ±½öÊä³öÌáÊ¾ĞÅÏ¢
-                cerr << "²ËÆ· " << dishName << " Î´ÔÚ dishes Êı×éÖĞÕÒµ½" << endl;
+                // å¯æ·»åŠ æ›´å®Œå–„çš„é”™è¯¯å¤„ç†é€»è¾‘ï¼Œè¿™é‡Œæš‚æ—¶ä»…è¾“å‡ºæç¤ºä¿¡æ¯
+                cerr << "èœå“ " << dishName << " æœªåœ¨ dishes æ•°ç»„ä¸­æ‰¾åˆ°" << endl;
             }
         } else {
-            // ´¦Àí½âÎö´íÎó£¬¿ÉÌí¼Ó¸üÍêÉÆµÄ´íÎó´¦ÀíÂß¼­
-            cerr << "½âÎö¶©µ¥ÎÄ¼şĞĞ³ö´í£º" << line << endl;
+            // å¤„ç†è§£æé”™è¯¯ï¼Œå¯æ·»åŠ æ›´å®Œå–„çš„é”™è¯¯å¤„ç†é€»è¾‘
+            cerr << "è§£æè®¢å•æ–‡ä»¶è¡Œå‡ºé”™ï¼š" << line << endl;
         }
     }
     orderFile.close();
 
 
-    cout << "µ±ÌìÍ³¼ÆĞÅÏ¢£º" << endl;
+    cout << "å½“å¤©ç»Ÿè®¡ä¿¡æ¯ï¼š" << endl;
 
 
-    // Êä³öÒÑÍê³É²ËÆ·ÊıÁ¿
-    cout << "ÒÑ×ö²ËÆ·ÊıÁ¿£º" << endl;
+    // è¾“å‡ºå·²å®Œæˆèœå“æ•°é‡
+    cout << "å·²åšèœå“æ•°é‡ï¼š" << endl;
     for (int i = 0; i < dishCount; i++) {
         if (completedDishCount[i] > 0) {
             cout << dishes[i].dishName << ": " << completedDishCount[i] << endl;
@@ -1450,8 +1450,8 @@ void cashierStatistics() {
     }
 
 
-    // Êä³öÒÑÍê³É²ËÆ·½ğ¶î
-    cout << "ÒÑ×ö²ËÆ·½ğ¶î£º" << endl;
+    // è¾“å‡ºå·²å®Œæˆèœå“é‡‘é¢
+    cout << "å·²åšèœå“é‡‘é¢ï¼š" << endl;
     for (int i = 0; i < dishCount; i++) {
         if (completedDishAmount[i] > 0) {
             cout << dishes[i].dishName << ": " << fixed << setprecision(2) << completedDishAmount[i] << endl;
@@ -1459,8 +1459,8 @@ void cashierStatistics() {
     }
 
 
-    // Êä³ö´ı×ö²ËÆ·ÊıÁ¿
-    cout << "´ı×ö²ËÆ·ÊıÁ¿£º" << endl;
+    // è¾“å‡ºå¾…åšèœå“æ•°é‡
+    cout << "å¾…åšèœå“æ•°é‡ï¼š" << endl;
     for (int i = 0; i < dishCount; i++) {
         if (pendingDishCount[i] > 0) {
             cout << dishes[i].dishName << ": " << pendingDishCount[i] << endl;
@@ -1468,8 +1468,8 @@ void cashierStatistics() {
     }
 
 
-    // Êä³ö´ı×ö²ËÆ·½ğ¶î
-    cout << "´ı×ö²ËÆ·½ğ¶î£º" << endl;
+    // è¾“å‡ºå¾…åšèœå“é‡‘é¢
+    cout << "å¾…åšèœå“é‡‘é¢ï¼š" << endl;
     for (int i = 0; i < dishCount; i++) {
         if (pendingDishAmount[i] > 0) {
             cout << dishes[i].dishName << ": " << fixed << setprecision(2) << pendingDishAmount[i] << endl;
@@ -1477,8 +1477,8 @@ void cashierStatistics() {
     }
 
 
-    // ¸Ä½ø·µ»ØÂß¼­
-    cout << "ÊäÈëÊı×Ö¡°1¡±ÒÔ·µ»Ø" << endl;
+    // æ”¹è¿›è¿”å›é€»è¾‘
+    cout << "è¾“å…¥æ•°å­—â€œ1â€ä»¥è¿”å›" << endl;
     string input;
     while (true) {
         cin >> input;
@@ -1486,17 +1486,17 @@ void cashierStatistics() {
             cashierMenu();
             break;
         } else {
-            cout << "ÇëÖØĞÂÊäÈë" << endl;
+            cout << "è¯·é‡æ–°è¾“å…¥" << endl;
         }
     }
 }
 
-//3.ÊÕÒø²é¿´Í³¼Æ
+//3.æ”¶é“¶æŸ¥çœ‹ç»Ÿè®¡
 void cashierViewStatistics() {
     int completedDishCount[MAX_GOODS] = {0};
 
 
-    // ´ò¿ª¶©µ¥ÎÄ¼ş
+    // æ‰“å¼€è®¢å•æ–‡ä»¶
     ifstream orderFile("orders.txt");
     if (orderFile.is_open()) {
         string line;
@@ -1507,7 +1507,7 @@ void cashierViewStatistics() {
             int quantity;
             int dishStatus;
             double dishPrice;
-            // ¼ÙÉè order.txt ÖĞĞÅÏ¢¸ñÊ½Îª ×ÀºÅ ²ËÆ·Ãû³Æ ÊıÁ¿ ²ËÆ·×´Ì¬ ²ËÆ·¼Û¸ñ
+            // å‡è®¾ order.txt ä¸­ä¿¡æ¯æ ¼å¼ä¸º æ¡Œå· èœå“åç§° æ•°é‡ èœå“çŠ¶æ€ èœå“ä»·æ ¼
             if (iss >> tableNumber >> dishName >> quantity >> dishStatus >> dishPrice) {
                 if (dishStatus == 3) {
                     bool found = false;
@@ -1519,24 +1519,24 @@ void cashierViewStatistics() {
                         }
                     }
                     if (!found) {
-                        // ¿ÉÌí¼Ó¸üÍêÉÆµÄ´íÎó´¦ÀíÂß¼­£¬ÕâÀïÔİÊ±½öÊä³öÌáÊ¾ĞÅÏ¢
-                        cerr << "²ËÆ· " << dishName << " Î´ÔÚ goods Êı×éÖĞÕÒµ½" << endl;
+                        // å¯æ·»åŠ æ›´å®Œå–„çš„é”™è¯¯å¤„ç†é€»è¾‘ï¼Œè¿™é‡Œæš‚æ—¶ä»…è¾“å‡ºæç¤ºä¿¡æ¯
+                        cerr << "èœå“ " << dishName << " æœªåœ¨ goods æ•°ç»„ä¸­æ‰¾åˆ°" << endl;
                     }
                 }
             } else {
-                // ´¦Àí½âÎö´íÎó£¬¿ÉÌí¼Ó¸üÍêÉÆµÄ´íÎó´¦ÀíÂß¼­
-                cerr << "½âÎö¶©µ¥ÎÄ¼şĞĞ³ö´í£º" << line << endl;
+                // å¤„ç†è§£æé”™è¯¯ï¼Œå¯æ·»åŠ æ›´å®Œå–„çš„é”™è¯¯å¤„ç†é€»è¾‘
+                cerr << "è§£æè®¢å•æ–‡ä»¶è¡Œå‡ºé”™ï¼š" << line << endl;
             }
         }
         orderFile.close();
     } else {
-        cout << "ÎŞ·¨´ò¿ª¶©µ¥ÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€è®¢å•æ–‡ä»¶" << endl;
         return;
     }
 
 
-    cout << "µ±ÌìÒÑÍê³É²ËÆ·Í³¼Æ£¨²ÆÎñ½Ç¶È£©£º" << endl;
-    cout << "    ²ËÆ·Ãû³Æ           ÊıÁ¿         ×Ü½ğ¶î" << endl;
+    cout << "å½“å¤©å·²å®Œæˆèœå“ç»Ÿè®¡ï¼ˆè´¢åŠ¡è§’åº¦ï¼‰ï¼š" << endl;
+    cout << "    èœå“åç§°           æ•°é‡         æ€»é‡‘é¢" << endl;
     for (int i = 0; i < goodsCount; i++) {
         if (completedDishCount[i] > 0) {
             double totalAmount = goods[i].price * completedDishCount[i];
@@ -1545,7 +1545,7 @@ void cashierViewStatistics() {
     }
 
 
-    cout << "ÊäÈëÊı×Ö¡°1¡±ÒÔ·µ»Ø" << endl;
+    cout << "è¾“å…¥æ•°å­—â€œ1â€ä»¥è¿”å›" << endl;
     string nm, mmmm = "1";
     while (true) {
         cin >> nm;
@@ -1553,36 +1553,36 @@ void cashierViewStatistics() {
             cashierMenu();
             break;
         } else {
-            cout << "ÇëÖØĞÂÊäÈë" << endl;
+            cout << "è¯·é‡æ–°è¾“å…¥" << endl;
         }
     }
 }
 
 
 
-/////////////////ÏµÍ³¹ÜÀíÔ± 
-// ¹ÜÀíÔ± 
+/////////////////ç³»ç»Ÿç®¡ç†å‘˜ 
+// ç®¡ç†å‘˜ 
 void manageMenu() {
 	system("cls");
     while (true) {
         cout << "***************************************************" << endl;
-        cout << "              »¶Ó­½øÈëÏµÍ³¹ÜÀíÔ±ÏµÍ³               " << endl;
+        cout << "              æ¬¢è¿è¿›å…¥ç³»ç»Ÿç®¡ç†å‘˜ç³»ç»Ÿ               " << endl;
         cout << "***************************************************" << endl;
-        cout << "*              1.Ìí¼ÓÓÃ»§ĞÅÏ¢                     *" << endl;
+        cout << "*              1.æ·»åŠ ç”¨æˆ·ä¿¡æ¯                     *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*              2.ĞŞ¸ÄÓÃ»§ĞÅÏ¢                     *" << endl;
+        cout << "*              2.ä¿®æ”¹ç”¨æˆ·ä¿¡æ¯                     *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*              3.²é¿´ÓÃ»§ĞÅÏ¢                     *" << endl;
+        cout << "*              3.æŸ¥çœ‹ç”¨æˆ·ä¿¡æ¯                     *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*              4.Ìí¼Ó²ËÆ·ĞÅÏ¢                     *" << endl;
+        cout << "*              4.æ·»åŠ èœå“ä¿¡æ¯                     *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*              5.É¾³ı²ËÆ·ĞÅÏ¢                     *" << endl;
+        cout << "*              5.åˆ é™¤èœå“ä¿¡æ¯                     *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*              6.¸ü¸Ä²ËÆ·ĞÅÏ¢                     *" << endl;
+        cout << "*              6.æ›´æ”¹èœå“ä¿¡æ¯                     *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*              7.²é¿´²ËÆ·ĞÅÏ¢                     *" << endl;
+        cout << "*              7.æŸ¥çœ‹èœå“ä¿¡æ¯                     *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*              0.ÍË³öµ½Ö÷²Ëµ¥                     *" << endl;
+        cout << "*              0.é€€å‡ºåˆ°ä¸»èœå•                     *" << endl;
         cout << "***************************************************" << endl;
         int choice;
         cin >> choice;
@@ -1612,7 +1612,7 @@ void manageMenu() {
             mainmenu();
             break;
         default:
-            cout << "ÎŞĞ§µÄÑ¡Ôñ£¬ÇëÖØĞÂÊäÈë£¡" << endl;
+            cout << "æ— æ•ˆçš„é€‰æ‹©ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
             continue;
         }
         system("pause");
@@ -1620,15 +1620,15 @@ void manageMenu() {
     }
 }
 
-// 1.Ìí¼ÓÓÃ»§ĞÅÏ¢
+// 1.æ·»åŠ ç”¨æˆ·ä¿¡æ¯
 void addUserInformation() {
     string username, password, role;
-    cout << "ÇëÊäÈëÒªÌí¼ÓµÄÓÃ»§ĞÅÏ¢(ÊäÈë Q Ê±ÍË³ö£»ÈôÊäÈë¶à¸ö£¬Çë·ÖÁ½ĞĞÊäÈë Q ÍË³ö)" << endl;
-    cout << "ÊäÈë¸ñÊ½£ºÓÃ»§Ãû ÃÜÂë ½ÇÉ«" << endl;
+    cout << "è¯·è¾“å…¥è¦æ·»åŠ çš„ç”¨æˆ·ä¿¡æ¯(è¾“å…¥ Q æ—¶é€€å‡ºï¼›è‹¥è¾“å…¥å¤šä¸ªï¼Œè¯·åˆ†ä¸¤è¡Œè¾“å…¥ Q é€€å‡º)" << endl;
+    cout << "è¾“å…¥æ ¼å¼ï¼šç”¨æˆ·å å¯†ç  è§’è‰²" << endl;
     while (true) {
         cin >> username;
         if (username == "Q") {
-            cout << "****Ìí¼Ó³É¹¦£¬ÕıÔÚÍË³ö****" << endl;
+            cout << "****æ·»åŠ æˆåŠŸï¼Œæ­£åœ¨é€€å‡º****" << endl;
             saveUsers();
             break;
         }
@@ -1638,60 +1638,60 @@ void addUserInformation() {
 }
 
 
-//2. ĞŞ¸ÄÓÃ»§ĞÅÏ¢
+//2. ä¿®æ”¹ç”¨æˆ·ä¿¡æ¯
 void changeUserInformation() {
     string targetUsername;
-    cout << "ÇëÊäÈëÒªĞŞ¸ÄµÄÓÃ»§µÄÓÃ»§Ãû£º" << endl;
+    cout << "è¯·è¾“å…¥è¦ä¿®æ”¹çš„ç”¨æˆ·çš„ç”¨æˆ·åï¼š" << endl;
     cin >> targetUsername;
     bool found = false;
     for (int i = 0; i < userCount; i++) {
         if (id[i].usname == targetUsername) {
             found = true;
-            cout << "ÒÑÕÒµ½¸ÃÓÃ»§£¬ÇëÊäÈëĞÂµÄÓÃ»§ĞÅÏ¢£¨ÊäÈë¸ñÊ½£ºÓÃ»§Ãû ÃÜÂë ½ÇÉ«£©£º" << endl;
+            cout << "å·²æ‰¾åˆ°è¯¥ç”¨æˆ·ï¼Œè¯·è¾“å…¥æ–°çš„ç”¨æˆ·ä¿¡æ¯ï¼ˆè¾“å…¥æ ¼å¼ï¼šç”¨æˆ·å å¯†ç  è§’è‰²ï¼‰ï¼š" << endl;
             string newUsername, newPassword, newRole;
             cin >> newUsername >> newPassword >> newRole;
             id[i].usname = newUsername;
             id[i].password = newPassword;
             id[i].role = newRole;
-            saveUsers();   //±£´æµ½ÎÄ¼şÖĞ (µ÷ÓÃº¯Êı 
-            cout << "ÓÃ»§ĞÅÏ¢ĞŞ¸Ä³É¹¦£¡" << endl;
+            saveUsers();   //ä¿å­˜åˆ°æ–‡ä»¶ä¸­ (è°ƒç”¨å‡½æ•° 
+            cout << "ç”¨æˆ·ä¿¡æ¯ä¿®æ”¹æˆåŠŸï¼" << endl;
             break;
         }
     }
     if (!found) {
-        cout << "Î´²éÕÒµ½ÒªĞŞ¸ÄµÄÓÃ»§£¬ÇëÈ·ÈÏÊÇ·ñÊäÈëÓĞÎó£¡" << endl;
-        manageMenu();//·µ»Øµ½ÏµÍ³¹ÜÀíÔ±½çÃæ 
+        cout << "æœªæŸ¥æ‰¾åˆ°è¦ä¿®æ”¹çš„ç”¨æˆ·ï¼Œè¯·ç¡®è®¤æ˜¯å¦è¾“å…¥æœ‰è¯¯ï¼" << endl;
+        manageMenu();//è¿”å›åˆ°ç³»ç»Ÿç®¡ç†å‘˜ç•Œé¢ 
     }
 }
 
-//3.²é¿´ËùÓĞµÄÓÃ»§ĞÅÏ¢£¨ÀÏ°åºÍ ¹ÜÀíÔ±Î´·Ö¿ª£¡£¡ 
+//3.æŸ¥çœ‹æ‰€æœ‰çš„ç”¨æˆ·ä¿¡æ¯ï¼ˆè€æ¿å’Œ ç®¡ç†å‘˜æœªåˆ†å¼€ï¼ï¼ 
 void viewUserInformation() {
-    cout << "*************************È«²¿ÓÃ»§ĞÅÏ¢ÈçÏÂ*************************" << endl;
-    cout << "           ÓÃ»§Ãû        ÃÜÂë        ½ÇÉ«" << endl;
+    cout << "*************************å…¨éƒ¨ç”¨æˆ·ä¿¡æ¯å¦‚ä¸‹*************************" << endl;
+    cout << "           ç”¨æˆ·å        å¯†ç         è§’è‰²" << endl;
     for (int i = 0; i < userCount; i++) {
         cout <<setw(18)<< id[i].usname << setw(12) << id[i].password << setw(12) << id[i].role << endl;
     }
     cout << "*******************************************************************" << endl;
-    system("pause");//½çÃæÔİÍ£ 
+    system("pause");//ç•Œé¢æš‚åœ 
     exit(0); 
 }
 
-//4.// Ìí¼ÓÉÌÆ·²Ëµ¥
+//4.// æ·»åŠ å•†å“èœå•
 void addGoodsMenu() {
     string name, category;
     double price;
     char choice;
     do {
-        // ×Ô¶¯Éú³É id£¬½«ÆäÉèÖÃÎª goodsCount
+        // è‡ªåŠ¨ç”Ÿæˆ idï¼Œå°†å…¶è®¾ç½®ä¸º goodsCount
         int id = goodsCount;
-        cout << "ÇëÊäÈëÉÌÆ·µÄÃû³Æ£º";
+        cout << "è¯·è¾“å…¥å•†å“çš„åç§°ï¼š";
         cin >> name;
-        cout << "ÇëÊäÈëÉÌÆ·µÄÀà±ğ£º";
+        cout << "è¯·è¾“å…¥å•†å“çš„ç±»åˆ«ï¼š";
         cin >> category;
-        cout << "ÇëÊäÈëÉÌÆ·µÄ¼Û¸ñ£º";
+        cout << "è¯·è¾“å…¥å•†å“çš„ä»·æ ¼ï¼š";
         cin >> price;
 
-        // ½«ÉÌÆ·ĞÅÏ¢Ìí¼Óµ½ goods Êı×éÖĞ
+        // å°†å•†å“ä¿¡æ¯æ·»åŠ åˆ° goods æ•°ç»„ä¸­
         if (goodsCount < MAX_GOODS) {
             goods[goodsCount].id = id+1;
             goods[goodsCount].name = name;
@@ -1699,102 +1699,102 @@ void addGoodsMenu() {
             goods[goodsCount].price = price;
             goodsCount++;
 
-            // ±£´æÉÌÆ·ĞÅÏ¢µ½ÎÄ¼ş
+            // ä¿å­˜å•†å“ä¿¡æ¯åˆ°æ–‡ä»¶
             saveGoods();
         } else {
-            cout << "ÉÌÆ·ÊıÁ¿ÒÑ´ïµ½ÉÏÏŞ£¬ÎŞ·¨Ìí¼ÓĞÂÉÌÆ·£¡" << endl;
+            cout << "å•†å“æ•°é‡å·²è¾¾åˆ°ä¸Šé™ï¼Œæ— æ³•æ·»åŠ æ–°å•†å“ï¼" << endl;
         }
 
-        cout << "ÊÇ·ñ¼ÌĞøÌí¼ÓÉÌÆ·£¿(Y/N) ";
+        cout << "æ˜¯å¦ç»§ç»­æ·»åŠ å•†å“ï¼Ÿ(Y/N) ";
         cin >> choice;
     } while (choice == 'Y' || choice == 'y');
 }
 
 
-//6.ĞŞ¸Ä²ËÆ·ĞÅÏ¢º¯Êı
+//6.ä¿®æ”¹èœå“ä¿¡æ¯å‡½æ•°
 void changeGoods() {
     if (goodsCount == 0) {
-        cout << "µ±Ç°Ã»ÓĞ²ËÆ·¿É¹©ĞŞ¸Ä¡£" << endl;
+        cout << "å½“å‰æ²¡æœ‰èœå“å¯ä¾›ä¿®æ”¹ã€‚" << endl;
         return;
     }
     string name;
-    cout << "ÇëÊäÈëÒªĞŞ¸ÄµÄ²ËÆ·Ãû³Æ£º" << endl;
+    cout << "è¯·è¾“å…¥è¦ä¿®æ”¹çš„èœå“åç§°ï¼š" << endl;
     cin >> name;
     bool found = false;
     for (int i = 0; i < goodsCount; ++i) {
         if (goods[i].name == name) {
             found = true;
-            // Êä³öÔ­ÓĞµÄ²ËÆ·ĞÅÏ¢
-            cout << "Ô­ÓĞµÄ²ËÆ·ĞÅÏ¢ÈçÏÂ£º" << endl;
-            cout << "²ËÆ·Ãû³Æ£º" << goods[i].name << endl;
-            cout << "²ËÆ·Àà±ğ£º" << goods[i].category << endl;
-            cout << "²ËÆ·¼Û¸ñ£º" << goods[i].price << endl;
+            // è¾“å‡ºåŸæœ‰çš„èœå“ä¿¡æ¯
+            cout << "åŸæœ‰çš„èœå“ä¿¡æ¯å¦‚ä¸‹ï¼š" << endl;
+            cout << "èœå“åç§°ï¼š" << goods[i].name << endl;
+            cout << "èœå“ç±»åˆ«ï¼š" << goods[i].category << endl;
+            cout << "èœå“ä»·æ ¼ï¼š" << goods[i].price << endl;
             string newName, newCategory;
             double newPrice;
-            cout << "ÇëÊäÈëĞÂµÄ²ËÆ·Ãû³Æ£º" << endl;
+            cout << "è¯·è¾“å…¥æ–°çš„èœå“åç§°ï¼š" << endl;
             cin >> newName;
-            cout << "ÇëÊäÈëĞÂµÄ²ËÆ·Àà±ğ£º" << endl;
+            cout << "è¯·è¾“å…¥æ–°çš„èœå“ç±»åˆ«ï¼š" << endl;
             cin >> newCategory;
-            cout << "ÇëÊäÈëĞÂµÄ²ËÆ·¼Û¸ñ£º" << endl;
+            cout << "è¯·è¾“å…¥æ–°çš„èœå“ä»·æ ¼ï¼š" << endl;
             cin >> newPrice;
             goods[i].name = newName;
             goods[i].category = newCategory;
             goods[i].price = newPrice;
-            cout << "²ËÆ· " << name << " ÒÑĞŞ¸Ä³É¹¦£¡" << endl;
+            cout << "èœå“ " << name << " å·²ä¿®æ”¹æˆåŠŸï¼" << endl;
             break;
         }
     }
     if (!found) {
-        cout << "Î´ÕÒµ½ÃûÎª " << name << " µÄ²ËÆ·¡£" << endl;
+        cout << "æœªæ‰¾åˆ°åä¸º " << name << " çš„èœå“ã€‚" << endl;
         return;
     }
-    // ±£´æ¸üĞÂºóµÄ²ËÆ·ĞÅÏ¢µ½ÎÄ¼ş
+    // ä¿å­˜æ›´æ–°åçš„èœå“ä¿¡æ¯åˆ°æ–‡ä»¶
     saveGoods();
 } 
 
 
 
-/////////////ÀÏ°å
-// ÀÏ°å²Ëµ¥
+/////////////è€æ¿
+// è€æ¿èœå•
 void bossMenu() {
 	system("cls");
     while (true) {
         cout << "***************************************************" << endl;
-        cout << "              »¶Ó­½øÈë²ÍÌüÀÏ°å×ÓÏµÍ³               " << endl;
+        cout << "              æ¬¢è¿è¿›å…¥é¤å…è€æ¿å­ç³»ç»Ÿ               " << endl;
         cout << "***************************************************" << endl;
-        cout << "*              1.²é¿´½ñÈÕ×ÜÊÕÈëÈçºÎ               *" << endl;
+        cout << "*              1.æŸ¥çœ‹ä»Šæ—¥æ€»æ”¶å…¥å¦‚ä½•               *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*              2.²é¿´²ËÆ·ÏúÊÛÇé¿ö                 *" << endl;
+        cout << "*              2.æŸ¥çœ‹èœå“é”€å”®æƒ…å†µ                 *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*              3.²é¿´½ñÈÕÍê³ÉÓëÎ´Íê³É             *" << endl;
+        cout << "*              3.æŸ¥çœ‹ä»Šæ—¥å®Œæˆä¸æœªå®Œæˆ             *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*              4.²é¿´×ùÎ»Ê¹ÓÃÇé¿ö                 *" << endl;
+        cout << "*              4.æŸ¥çœ‹åº§ä½ä½¿ç”¨æƒ…å†µ                 *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*              5.²é¿´Ô±¹¤ĞÅÏ¢                     *" << endl;
+        cout << "*              5.æŸ¥çœ‹å‘˜å·¥ä¿¡æ¯                     *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*              6.²é¿´²Ëµ¥                         *" << endl;
+        cout << "*              6.æŸ¥çœ‹èœå•                         *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*              7.ÊäÈëµ¥¾İºÅ²éÕÒÏúÊÛ               *" << endl;
+        cout << "*              7.è¾“å…¥å•æ®å·æŸ¥æ‰¾é”€å”®               *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*              8.É¾³ıÄ³¸ö²ËÆ·                     *" << endl;
+        cout << "*              8.åˆ é™¤æŸä¸ªèœå“                     *" << endl;
         cout << "*                                                 *" << endl;
-        cout << "*              0.ÍË³öµ½Ö÷²Ëµ¥                     *" << endl;
+        cout << "*              0.é€€å‡ºåˆ°ä¸»èœå•                     *" << endl;
         cout << "***************************************************" << endl;
-        cout<<"ÇëÑ¡Ôñ£º"<<endl;
+        cout<<"è¯·é€‰æ‹©ï¼š"<<endl;
         int choice;
         cin >> choice;
         switch (choice) {
         case 1:
-        	shouru(); //²é¿´½ñÈÕ×ÜÊÕÈëÈçºÎ £¨±éÀúÁËÎÒĞ¡Æ±¸ÅÒª×ÜÊÕÈë 
+        	shouru(); //æŸ¥çœ‹ä»Šæ—¥æ€»æ”¶å…¥å¦‚ä½• ï¼ˆéå†äº†æˆ‘å°ç¥¨æ¦‚è¦æ€»æ”¶å…¥ 
          	break;
         case 2:
-        	cashierViewStatistics();//ÕâÀïÊ¹ÓÃÁËºÍÊÕÒøÒ»ÑùµÄº¯Êı (ÓĞµãÎÊÌâ 
+        	cashierViewStatistics();//è¿™é‡Œä½¿ç”¨äº†å’Œæ”¶é“¶ä¸€æ ·çš„å‡½æ•° (æœ‰ç‚¹é—®é¢˜ 
         	break;
         case 3:
         	lookall();    //
             break;
         case 4:
-        	viewTables();    //²é¿´×ùÎ»Ê¹ÓÃÇé¿ö
+        	viewTables();    //æŸ¥çœ‹åº§ä½ä½¿ç”¨æƒ…å†µ
             break;
         case 5:
         	viewUserInformation();    
@@ -1812,50 +1812,50 @@ void bossMenu() {
             mainmenu();    
             break;    
         default:
-            cout<<"´íÎóÊäÈë£¡£¡£¡"<<endl; 
-            cout<<"ÇëÖØĞÂÊäÈë:"<<endl;
+            cout<<"é”™è¯¯è¾“å…¥ï¼ï¼ï¼"<<endl; 
+            cout<<"è¯·é‡æ–°è¾“å…¥:"<<endl;
             continue;
         }
         break;
     }
 }
 
-//1.¿´½ñÈÕÊÕÈëÈçºÎ
+//1.çœ‹ä»Šæ—¥æ”¶å…¥å¦‚ä½•
 void shouru() {
     double totalIncome = 0;
 
-    // ´ò¿ªÏúÊÛ¸ÅÒªÎÄ¼ş
+    // æ‰“å¼€é”€å”®æ¦‚è¦æ–‡ä»¶
     ifstream salesSummaryFile("sales_summary.txt");
     if (salesSummaryFile.is_open()) {
         string line;
 
-        // ÖğĞĞ¶ÁÈ¡ÎÄ¼ş
+        // é€è¡Œè¯»å–æ–‡ä»¶
         while (getline(salesSummaryFile, line)) {
             istringstream iss(line);
-            int danju;  // µ¥¾İºÅ
-            double allmoney;  // ¸Ãµ¥¾İµÄ×Ü½ğ¶î
+            int danju;  // å•æ®å·
+            double allmoney;  // è¯¥å•æ®çš„æ€»é‡‘é¢
 
-            // ´Óµ±Ç°ĞĞ½âÎöµ¥¾İºÅºÍ×Ü½ğ¶î
+            // ä»å½“å‰è¡Œè§£æå•æ®å·å’Œæ€»é‡‘é¢
             if (iss >> danju >> allmoney) {
-                // ½«¸Ãµ¥¾İµÄ×Ü½ğ¶îÀÛ¼Óµ½×ÜÊÕÈë
+                // å°†è¯¥å•æ®çš„æ€»é‡‘é¢ç´¯åŠ åˆ°æ€»æ”¶å…¥
                 totalIncome += allmoney;
             } else {
-                // ½âÎöÊ§°ÜÊ±Êä³ö´íÎóĞÅÏ¢
-                cerr << "½âÎöÏúÊÛ¸ÅÒªÎÄ¼şĞĞ³ö´í£º" << line << endl;
+                // è§£æå¤±è´¥æ—¶è¾“å‡ºé”™è¯¯ä¿¡æ¯
+                cerr << "è§£æé”€å”®æ¦‚è¦æ–‡ä»¶è¡Œå‡ºé”™ï¼š" << line << endl;
             }
         }
         salesSummaryFile.close();
     } else {
-        cout << "ÎŞ·¨´ò¿ªÏúÊÛ¸ÅÒªÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€é”€å”®æ¦‚è¦æ–‡ä»¶" << endl;
         return;
     }
 
-    // Êä³ö½ñÈÕ×ÜÊÕÈë£¬±£ÁôÁ½Î»Ğ¡Êı
-    cout << "½ñÈÕ×ÜÊÕÈë£º" << fixed << setprecision(2) << totalIncome << endl;
+    // è¾“å‡ºä»Šæ—¥æ€»æ”¶å…¥ï¼Œä¿ç•™ä¸¤ä½å°æ•°
+    cout << "ä»Šæ—¥æ€»æ”¶å…¥ï¼š" << fixed << setprecision(2) << totalIncome << endl;
 }
 
 
-//3.²é¿´½ñÈÕÍê³ÉÓëÎ´Íê³É
+//3.æŸ¥çœ‹ä»Šæ—¥å®Œæˆä¸æœªå®Œæˆ
 void lookall() {
     int completedDishCount = 0;
     double completedDishAmount = 0;
@@ -1876,7 +1876,7 @@ void lookall() {
             int quantity;
             int dishStatus;
             double dishPrice;
-            // ¼ÙÉè orders.txt ÖĞĞÅÏ¢¸ñÊ½Îª ×ÀºÅ ²ËÆ·Ãû³Æ ÊıÁ¿ ²ËÆ·×´Ì¬ ²ËÆ·¼Û¸ñ
+            // å‡è®¾ orders.txt ä¸­ä¿¡æ¯æ ¼å¼ä¸º æ¡Œå· èœå“åç§° æ•°é‡ èœå“çŠ¶æ€ èœå“ä»·æ ¼
             iss >> tableNumber >> dishName >> quantity >> dishStatus >> dishPrice;
 
 
@@ -1893,35 +1893,35 @@ void lookall() {
         }
         ordersFile.close();
     } else {
-        cout << "ÎŞ·¨´ò¿ª¶©µ¥ÎÄ¼ş" << endl;
+        cout << "æ— æ³•æ‰“å¼€è®¢å•æ–‡ä»¶" << endl;
         return;
     }
 
 
-    cout << "ÒÑÍê³É²ËÆ·ÊıÁ¿£º" << completedDishCount << " ÒÑÍê³É²ËÆ·½ğ¶î£º" << fixed << setprecision(2) << completedDishAmount << endl;
-    cout << "Î´Íê³É²ËÆ·ÊıÁ¿£º" << pendingDishCount << " Î´Íê³É²ËÆ·½ğ¶î£º" << fixed << setprecision(2) << pendingDishAmount << endl;
+    cout << "å·²å®Œæˆèœå“æ•°é‡ï¼š" << completedDishCount << " å·²å®Œæˆèœå“é‡‘é¢ï¼š" << fixed << setprecision(2) << completedDishAmount << endl;
+    cout << "æœªå®Œæˆèœå“æ•°é‡ï¼š" << pendingDishCount << " æœªå®Œæˆèœå“é‡‘é¢ï¼š" << fixed << setprecision(2) << pendingDishAmount << endl;
 
 
-    // Êä³öÎ´Íê³É²ËÆ·µÄÃû³ÆºÍÊıÁ¿
+    // è¾“å‡ºæœªå®Œæˆèœå“çš„åç§°å’Œæ•°é‡
     if (pendingDishIndex > 0) {
-        cout << "Î´Íê³É²ËÆ·ĞÅÏ¢£º" << endl;
-        cout << "²ËÆ·Ãû³Æ    ÊıÁ¿" << endl;
+        cout << "æœªå®Œæˆèœå“ä¿¡æ¯ï¼š" << endl;
+        cout << "èœå“åç§°    æ•°é‡" << endl;
         for (int i = 0; i < pendingDishIndex; ++i) {
             cout << setw(12) << pendingDishNames[i] << setw(12) << pendingDishQuantities[i] << endl;
         }
     }
 }
 
-// 7.ÀÏ°å¸ù¾İµ¥¾İºÅ²éÕÒĞ¡Æ±ÏêÏ¸ĞÅÏ¢
+// 7.è€æ¿æ ¹æ®å•æ®å·æŸ¥æ‰¾å°ç¥¨è¯¦ç»†ä¿¡æ¯
 void bossSearchByDanju() {
     int inputDanju;
-    cout << "ÇëÊäÈëµ¥¾İºÅ: ";
+    cout << "è¯·è¾“å…¥å•æ®å·: ";
     cin >> inputDanju;
 
 
     ifstream detailFile("sales_detail.txt");
     if (!detailFile.is_open()) {
-        cout << "ÎŞ·¨´ò¿ªÏúÊÛÏêÏ¸ÎÄ¼ş¡£" << endl;
+        cout << "æ— æ³•æ‰“å¼€é”€å”®è¯¦ç»†æ–‡ä»¶ã€‚" << endl;
         return;
     }
 
@@ -1934,20 +1934,20 @@ void bossSearchByDanju() {
         if (iss >> detail.danju >> detail.dishName >> detail.dishPrice >> detail.quantity) {
             if (detail.danju == inputDanju) {
                 found = true;
-                cout << "²ËÆ·Ãû³Æ: " << detail.dishName << " ÊıÁ¿: " << detail.quantity << " µ¥¼Û: " << fixed << setprecision(2) << detail.dishPrice << endl;
+                cout << "èœå“åç§°: " << detail.dishName << " æ•°é‡: " << detail.quantity << " å•ä»·: " << fixed << setprecision(2) << detail.dishPrice << endl;
             }
         } else {
-            cout << "½âÎöÏúÊÛÏêÏ¸ĞÅÏ¢ĞĞ³ö´í¡£" << endl;
+            cout << "è§£æé”€å”®è¯¦ç»†ä¿¡æ¯è¡Œå‡ºé”™ã€‚" << endl;
         }
     }
     detailFile.close();
 
 
     if (!found) {
-        cout << "Î´ÕÒµ½¸Ãµ¥¾İºÅ¶ÔÓ¦µÄÏúÊÛĞÅÏ¢¡£" << endl;
+        cout << "æœªæ‰¾åˆ°è¯¥å•æ®å·å¯¹åº”çš„é”€å”®ä¿¡æ¯ã€‚" << endl;
     }
 
-    cout << "ÊäÈëÊı×Ö¡°1¡±ÒÔ·µ»Ø" << endl;
+    cout << "è¾“å…¥æ•°å­—â€œ1â€ä»¥è¿”å›" << endl;
     string input;
     while (true) {
         cin >> input;
@@ -1955,19 +1955,19 @@ void bossSearchByDanju() {
             bossMenu();
             break;
         } else {
-            cout << "ÇëÖØĞÂÊäÈë" << endl;
+            cout << "è¯·é‡æ–°è¾“å…¥" << endl;
         }
     }
 } 
 
-//8. É¾³ı²ËÆ·º¯Êı
+//8. åˆ é™¤èœå“å‡½æ•°
 void deleteGoods() {
     if (goodsCount == 0) {
-        cout << "µ±Ç°Ã»ÓĞ²ËÆ·¿É¹©É¾³ı¡£" << endl;
+        cout << "å½“å‰æ²¡æœ‰èœå“å¯ä¾›åˆ é™¤ã€‚" << endl;
         return;
     }
     string nameToDelete;
-    cout << "ÇëÊäÈëÒªÉ¾³ıµÄ²ËÆ·Ãû³Æ£º" << endl;
+    cout << "è¯·è¾“å…¥è¦åˆ é™¤çš„èœå“åç§°ï¼š" << endl;
     cin >> nameToDelete;
     bool found = false;
     for (int i = 0; i < goodsCount; ++i) {
@@ -1977,14 +1977,14 @@ void deleteGoods() {
                 goods[j] = goods[j + 1];
             }
             goodsCount--;
-            cout << "²ËÆ· " << nameToDelete << " ÒÑÉ¾³ı³É¹¦£¡" << endl;
+            cout << "èœå“ " << nameToDelete << " å·²åˆ é™¤æˆåŠŸï¼" << endl;
             break;
         }
     }
     if (!found) {
-        cout << "Î´ÕÒµ½ÃûÎª " << nameToDelete << " µÄ²ËÆ·¡£" << endl;
+        cout << "æœªæ‰¾åˆ°åä¸º " << nameToDelete << " çš„èœå“ã€‚" << endl;
     }
-    // µ÷Õû²ËÆ·µÄ id
+    // è°ƒæ•´èœå“çš„ id
     for (int i = 0; i < goodsCount; ++i) {
         goods[i].id = i + 1;
     }
@@ -1992,12 +1992,12 @@ void deleteGoods() {
 }
 
 int main() {
-    // ¼ÓÔØÊı¾İ
+    // åŠ è½½æ•°æ®
    
-    loadSaleSummary(); // ¼ÓÔØĞ¡Æ±¸ÅÒªĞÅÏ¢
-    loadSaleDetail();// ¼ÓÔØĞ¡Æ±ÏêÏ¸ĞÅÏ¢
-    loadGoods(); //¿ÉÌá¹©²ËÆ·ĞÅÏ¢ 
-    loadTables();//¼ÓÔØ²Í×ÀĞÅÏ¢ 
+    loadSaleSummary(); // åŠ è½½å°ç¥¨æ¦‚è¦ä¿¡æ¯
+    loadSaleDetail();// åŠ è½½å°ç¥¨è¯¦ç»†ä¿¡æ¯
+    loadGoods(); //å¯æä¾›èœå“ä¿¡æ¯ 
+    loadTables();//åŠ è½½é¤æ¡Œä¿¡æ¯ 
     
     loadUsers(); 
     mainmenu();
