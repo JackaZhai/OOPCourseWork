@@ -1,0 +1,26 @@
+# 忽略构建目录
+/build/
+
+# 忽略IDE生成的文件
+.vscode/
+.idea/
+*.suo
+*.user
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
+# 编译生成的文件
+*.o
+*.obj
+*.exe
+*.out
+*.app
+*.dll
+*.so
+*.dylib
+
+# 其他临时文件
+*.log
+*.tmp
+.DS_Store
